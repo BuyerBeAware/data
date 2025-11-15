@@ -1,16 +1,16 @@
 [
-  {
-    "title": "SR 16 Widening: IGP to CR 2209",
-    "type": "Road Project",
-    "status": "Under Construction / Funded",
-    "plannedYear": "Approx. 2024–2027",
-    "latitude": 29.9456,
-    "longitude": -81.4687,
-    "details": "State Road 16 is being widened...",
-    "schedule": "County contracts for over $25M...",
-    "projectId": "FDOT FPID 210447-5 ...",
-    "sourceURL": "https://www.sjcfl.us/..."
-  },
+ {
+  "title": "SR 16 Widening Phase II",
+  "type": "Road Project",
+  "status": "Under Construction / Funded",
+  "plannedYear": "Approx. 2025–2028",
+  "latitude": 29.928,
+  "longitude": -81.425,
+  "details": "State Road 16 is being widened and upgraded in phases between International Golf Parkway, CR 2209, and I-95 to address heavy congestion near World Golf Village and new development. Work includes adding lanes, new signals, sidewalks, and drainage improvements to support long-term traffic growth and safety for drivers, bikes, and pedestrians.",
+  "schedule": "St. Johns County and the State of Florida have approved over $25–30 million in funding for SR 16 capacity improvements, with construction underway near IGP and additional phases funded or requested through the 2025–2028 window.",
+  "projectId": "SR 16 Capacity Improvements – FDOT FPID 210447-5 & related county contracts",
+  "sourceURL": "https://www.sjcfl.us/sjc-groundbreaking-sr-16-international-golf-parkway-project/"
+},
   {
     "title": "Trout Creek Bridge Replacement",
     "type": "Bridge Project",
@@ -22,5 +22,53 @@
     "schedule": "Design work is underway with construction anticipated to follow in the next capital cycle once funding is finalized.",
     "projectId": "Trout Creek Bridge – SJC Capital Project (placeholder)",
     "sourceURL": "https://example.com/trout-creek-bridge-details"
-  }
+  },
+  {
+  "title": "Silverleaf Phase 6 Expansion",
+  "type": "Housing Development",
+  "status": "Under Review / Incremental Approvals",
+  "plannedYear": "FY 2028 (buildout phases extend beyond)",
+  "latitude": 29.890,
+  "longitude": -81.380,
+  "details": "SilverLeaf is a large master-planned community with more than 8,000 acres approved under a long-term DRI and PUD. Phase 6 and related parcels represent the next wave of residential neighborhoods and supporting commercial uses, including new retail, infrastructure, and connections to the First Coast Expressway. Recent DRI and PUD modifications expand entitlements and adjust how future phases are built.",
+  "schedule": "SilverLeaf has been building in phases since around 2016. Additional phases and commercial areas, including new shopping and infrastructure, are moving through the county’s major and minor modification process now, with buildout continuing through the late 2020s and 2030s depending on market demand and approvals.",
+  "projectId": "SilverLeaf DRI / PUD – MAJMOD 2024-04 and related SilverLeaf DRI modifications; example app: 2025000017 (Silverleaf Parcel 60 Master Infrastructure)",
+  "sourceURL": "https://www.sjcfl.us/wp-content/uploads/2024/09/7.-majmod-2024-04-silverleaf-pud.pdf"
+},
+{
+  "title": "Pine Island Road Connector Improvements",
+  "type": "Road Project",
+  "status": "Completed (signal & turn lane project)",
+  "plannedYear": "Design 2023–2024, Construction 2024–2025",
+  "latitude": 30.048,
+  "longitude": -81.413,
+  "details": "St. Johns County has completed major safety and traffic flow upgrades at the intersection of U.S. 1 and Pine Island Road. The project added a new traffic signal, a dedicated right-turn lane from U.S. 1 to Pine Island, and separate signalized left- and right-turn lanes from Pine Island onto U.S. 1. The changes are designed to reduce rear-end crashes, improve sight lines, and keep through-traffic on U.S. 1 moving even when turn queues are heavy.",
+  "schedule": "Design and coordination with FDOT and the Florida East Coast Railway occurred through 2023–2024. Construction took place through early 2024–2025, and the new signal and turn lanes were reported fully operational by late summer 2025.",
+  "projectId": "US-1 / Pine Island Road Intersection Improvements – SJC Public Works (IFB No. 1850)",
+  "sourceURL": "https://www.sjcfl.us/sjc-traffic-signal-us1-pine-island-road-fully-operational/"
+},
+  {
+  "title": "Mill Creek Park Expansion",
+  "type": "Public Facility",
+  "status": "Under Construction / Recently Opened; further expansion planned",
+  "plannedYear": "Park opening 2025; future phases through FY 2029+",
+  "latitude": 29.980,
+  "longitude": -81.390,
+  "details": "Mill Creek Park on SR 16 is St. Johns County’s first new regional park in more than a decade. The facility includes multiple baseball and softball fields, a multipurpose field, batting cages, parking, restrooms, and support infrastructure. County capital plans also reference Mill Creek Regional Park and sports complex expansion, including amenities like pickleball, to serve the fast-growing western SR 16 corridor near World Golf Village.",
+  "schedule": "Planning and funding for Mill Creek Park and its regional sports complex have been in the county’s capital program for several years. The core park opened in early 2025, with additional phases and expansions planned through the later 2020s as budgets and bids are approved.",
+  "projectId": "Mill Creek Park / Mill Creek Regional Park – SJC Parks & Rec Capital Improvement Project",
+  "sourceURL": "https://www.sjcfl.us/parks-rec-capital-projects/"
+},
+  {
+  "title": "US-1 Safety & Turn Lane Improvements",
+  "type": "Road Project",
+  "status": "Ongoing Corridor Improvements",
+  "plannedYear": "FY 2025 and future capital cycles",
+  "latitude": 29.760,
+  "longitude": -81.318,
+  "details": "St. Johns County and FDOT are targeting the US-1 corridor for safety and congestion improvements, especially at major intersections. Recent work at Pine Island Road added needed turn lanes and a new traffic signal, and county transportation priority lists call for additional turn lane, signal, and intersection upgrades along US-1 at locations like Pine Island Road, CR 210, and other high-crash segments.",
+  "schedule": "The US-1 / Pine Island intersection was designed and built in the 2024–2025 timeframe, with the new signal and turn lanes going live in 2025. Additional US-1 corridor improvements are identified in regional transportation plans for design, right-of-way, and construction funding in upcoming years.",
+  "projectId": "US-1 Corridor Safety & Turn Lane Improvements – regional priority (includes US-1/Pine Island intersection project)",
+  "sourceURL": "https://stjohnsclerk.com/minrec/agendas/2024/121724cd/12-17-24REG01.pdf"
+}
 ]
