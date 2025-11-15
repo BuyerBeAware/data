@@ -70,5 +70,17 @@
   "schedule": "The US-1 / Pine Island intersection was designed and built in the 2024–2025 timeframe, with the new signal and turn lanes going live in 2025. Additional US-1 corridor improvements are identified in regional transportation plans for design, right-of-way, and construction funding in upcoming years.",
   "projectId": "US-1 Corridor Safety & Turn Lane Improvements – regional priority (includes US-1/Pine Island intersection project)",
   "sourceURL": "https://stjohnsclerk.com/minrec/agendas/2024/121724cd/12-17-24REG01.pdf"
+},
+ {
+  "title": "CR 2209 Extension",
+  "type": "Road Project",
+  "status": "Planned",
+  "plannedYear": "2026+",
+  "latitude": 29.99,
+  "longitude": -81.47,
+  "details": "Extending CR 2209 south toward SR 16 to improve north–south connectivity.",
+  "schedule": "Design in progress, construction start targeted 2026.",
+  "sourceURL": "https://example.com/cr2209",
+  "projectId": "SJC-CR2209-SEG-2"
 }
 ]
