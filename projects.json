@@ -6,10 +6,21 @@
     "plannedYear": "Approx. 2024–2027",
     "latitude": 29.9456,
     "longitude": -81.4687,
-    "details": "State Road 16 is being widened from two lanes to a four-lane divided road between International Golf Parkway and CR 2209. The project adds turn lanes, a new signalized intersection at CR 2209, sidewalks, drainage upgrades, and safer crossings. Expect more traffic during construction but better capacity and safer access long term.",
-    "schedule": "County contracts for over $25M in improvements were approved in mid-2025. Construction is underway, with major work expected through late 2026–2027 depending on phasing and weather.",
-    "projectId": "FDOT FPID 210447-5 – SR 16 PD&E (IGP to I-95) + SJC SR 16/IGP – CR 2209 Widening & Signals",
-    "sourceURL": "https://www.sjcfl.us/sjc-proceeds-with-25-million-in-state-road-16-improvements/"
+    "details": "State Road 16 is being widened...",
+    "schedule": "County contracts for over $25M...",
+    "projectId": "FDOT FPID 210447-5 ...",
+    "sourceURL": "https://www.sjcfl.us/..."
+  },
+  {
+    "title": "Trout Creek Bridge Replacement",
+    "type": "Bridge Project",
+    "status": "In Design",
+    "plannedYear": "FY 2026",
+    "latitude": 29.9840,
+    "longitude": -81.5070,
+    "details": "The existing Trout Creek bridge is scheduled to be replaced to improve safety and handle growing traffic volumes. Work will include a new bridge structure, updated guardrails, and approach roadway improvements.",
+    "schedule": "Design work is underway with construction anticipated to follow in the next capital cycle once funding is finalized.",
+    "projectId": "Trout Creek Bridge – SJC Capital Project (placeholder)",
+    "sourceURL": "https://example.com/trout-creek-bridge-details"
   }
 ]
-
