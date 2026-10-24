@@ -1,0 +1,33 @@
+
+name: BBA Project Research
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate project data
+        run: |
+          python -m json.tool projects.json > /dev/null
+
+      - name: Research preparation
+        run: |
+          echo "BBA research workflow is ready."
+          echo "Existing project data validated."
+          echo "AI research integration is the next step."
