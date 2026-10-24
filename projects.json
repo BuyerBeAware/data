@@ -24,6 +24,7 @@
     "schedule": "Design work is underway with construction anticipated to follow in the next capital cycle once funding is finalized.",
     "projectId": "Trout Creek Bridge – SJC Capital Project (placeholder)",
     "sourceURL": "https://example.com/trout-creek-bridge-details",
+    "locationQuery": "Trout Creek Bridge, St. Johns County, Florida",
     "locationSourceKind": "Representative point (not bridge inventory)",
     "locationSourceRef": "Needs authoritative bridge GIS"
   },
