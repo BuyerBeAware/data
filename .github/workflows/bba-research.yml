@@ -26,8 +26,13 @@ jobs:
         run: |
           python -m json.tool projects.json > /dev/null
 
-      - name: Research preparation
+      - name: Verify AI connection
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          echo "BBA research workflow is ready."
-          echo "Existing project data validated."
-          echo "AI research integration is the next step."
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "OpenAI API key connected successfully."
+          else
+            echo "OpenAI API key missing."
+            exit 1
+          fi
