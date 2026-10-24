@@ -1,21 +1,25 @@
-
 name: BBA Project Research
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 12 * * *'
 
 permissions:
   contents: read
 
+concurrency:
+  group: bba-research
+  cancel-in-progress: false
+
 jobs:
   research:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -23,16 +27,16 @@ jobs:
           python-version: '3.12'
 
       - name: Validate project data
-        run: |
-          python -m json.tool projects.json > /dev/null
+        run: python -m json.tool projects.json > /dev/null
 
-      - name: Verify AI connection
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          if [ -n "$OPENAI_API_KEY" ]; then
-            echo "OpenAI API key connected successfully."
-          else
-            echo "OpenAI API key missing."
-            exit 1
-          fi
+      - name: Discover review-only candidates
+        run: python scripts/discover_candidates.py
+
+      - name: Upload research report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bba-research-review-${{ github.run_id }}
+          path: research-output/candidates.json
+          if-no-files-found: error
+          retention-days: 14
