@@ -1,133 +1,45 @@
 
-import json
-import os
-from datetime import datetime, timezone
-from pathlib import Path
-from urllib.parse import urlparse
+name: BBA Project Research
 
-from openai import OpenAI
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *'
 
-OUTPUT_FILE = Path("research_candidates.json")
-MODEL = "gpt-4.1-mini"
+permissions:
+  contents: read
 
-SYSTEM_PROMPT = """
-You are the BuyerBeAware construction research assistant.
+jobs:
+  research:
+    runs-on: ubuntu-latest
 
-Research proposed, approved, and active construction projects
-in St. Johns County, Florida.
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-Prioritize:
-- County development and planning announcements
-- FDOT road and bridge projects
-- Municipal construction announcements
-- Commercial and residential developments
-- Local news reporting on upcoming construction
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-Use web search to find current public information.
+      - name: Install OpenAI SDK
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install openai
 
-Rules:
-1. Never invent a project, address, coordinate, or source.
-2. Every candidate must include a supporting source URL.
-3. Prefer official government or developer sources.
-4. If coordinates cannot be verified, return null.
-5. Do not treat approximate geographic locations as verified.
-6. Do not publish anything to the live app.
-7. Return JSON only, using this structure:
+      - name: Validate project data
+        run: |
+          python -m json.tool projects.json > /dev/null
 
-{
-  "projects": [
-    {
-      "title": "Project name",
-      "type": "Project category",
-      "status": "Proposed, Approved, or Under Construction",
-      "location": "Address or descriptive location",
-      "latitude": null,
-      "longitude": null,
-      "sourceURL": "https://...",
-      "summary": "Short factual description",
-      "verificationStatus": "Needs Review"
-    }
-  ]
-}
-"""
+      - name: Run BBA AI research
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/bba_research.py
 
-def main():
-    api_key = os.environ.get("OPENAI_API_KEY")
-
-    if not api_key:
-        raise RuntimeError("OPENAI_API_KEY is missing.")
-
-    client = OpenAI(api_key=api_key)
-
-    response = client.responses.create(
-        model=MODEL,
-        tools=[{"type": "web_search"}],
-        input=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": (
-                    "Find up to 10 recent construction projects "
-                    "in St. Johns County, Florida. "
-                    "Prioritize projects with identifiable locations "
-                    "and authoritative public sources."
-                )
-            }
-        ]
-    )
-
-    text = response.output_text.strip()
-
-    if text.startswith("```"):
-        text = text.split("\n", 1)[1]
-        text = text.rsplit("```", 1)[0].strip()
-
-    data = json.loads(text)
-    projects = data.get("projects", [])
-
-    if not isinstance(projects, list):
-        raise ValueError("Invalid projects list.")
-
-    reviewed = []
-
-    for project in projects:
-        if not isinstance(project, dict):
-            continue
-
-        source = project.get("sourceURL", "")
-        parsed = urlparse(source)
-
-        if parsed.scheme not in ("http", "https") or not parsed.netloc:
-            continue
-
-        reviewed.append({
-            "title": project.get("title", ""),
-            "type": project.get("type", ""),
-            "status": project.get("status", ""),
-            "location": project.get("location", ""),
-            "latitude": None,
-            "longitude": None,
-            "sourceURL": source,
-            "summary": project.get("summary", ""),
-            "verificationStatus": "Needs Review"
-        })
-
-    output = {
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "region": "St. Johns County, Florida",
-        "projects": reviewed
-    }
-
-    OUTPUT_FILE.write_text(
-        json.dumps(output, indent=2),
-        encoding="utf-8"
-    )
-
-    print(f"Research completed: {len(reviewed)} candidates.")
-    print(f"Review file: {OUTPUT_FILE}")
-
-if __name__ == "__main__":
-    main()
+      - name: Upload research candidates
+        uses: actions/upload-artifact@v4
+        with:
+          name: bba-research-candidates
+          path: research_candidates.json
+          retention-days: 14
