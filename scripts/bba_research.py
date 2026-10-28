@@ -332,15 +332,13 @@ def main():
     print(f"Wrote {len(candidates)} candidates to {OUTPUT.name}")
     print("projects.json was not modified.")
 
-
 if __name__ == "__main__":
     try:
         main()
     except ValueError as exc:
-    print(f"Validation failed: {exc}", file=sys.stderr)
-    sys.exit(1)
-except Exception as exc:
-        # Avoid printing API response bodies or credentials in Actions logs.
+        print(f"Validation failed: {exc}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as exc:
         print(
             f"Research failed ({type(exc).__name__}). "
             "No new candidate output was written. "
