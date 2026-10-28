@@ -146,22 +146,44 @@ def public_url(value):
         (parts.scheme.lower(), authority, parts.path or "/", parts.query, "")
     )
 
-
 def search_sources(response):
-    """Collect tool-provided sources and URL citations."""
+    """Collect sources and print safe diagnostic information."""
     urls = set()
-    for item in response.model_dump().get("output", []):
-        if item.get("type") == "web_search_call":
-            action = item.get("action") or {}
-            for source in action.get("sources") or []:
-                add_source(urls, source.get("url"))
+    data = response.model_dump()
 
-        if item.get("type") == "message":
+    for item in data.get("output") or []:
+        item_type = item.get("type")
+        print(f"Response item type: {item_type}")
+
+        if item_type == "web_search_call":
+            action = item.get("action") or {}
+            sources = action.get("sources") or []
+
+            print(
+                f"Search status: {item.get('status')}; "
+                f"action: {action.get('type')}; "
+                f"source count: {len(sources)}"
+            )
+
+            for source in sources:
+                if isinstance(source, dict):
+                    add_source(urls, source.get("url"))
+
+        elif item_type == "message":
             for content in item.get("content") or []:
-                for annotation in content.get("annotations") or []:
+                annotations = content.get("annotations") or []
+                print(
+                    f"Content type: {content.get('type')}; "
+                    f"annotation count: {len(annotations)}"
+                )
+
+                for annotation in annotations:
                     if annotation.get("type") == "url_citation":
                         add_source(urls, annotation.get("url"))
+
+    print(f"Usable source URL count: {len(urls)}")
     return urls
+
 
 
 def add_source(urls, value):
