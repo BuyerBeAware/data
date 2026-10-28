@@ -336,7 +336,10 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except Exception as exc:
+    except ValueError as exc:
+    print(f"Validation failed: {exc}", file=sys.stderr)
+    sys.exit(1)
+except Exception as exc:
         # Avoid printing API response bodies or credentials in Actions logs.
         print(
             f"Research failed ({type(exc).__name__}). "
