@@ -21,8 +21,8 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
-      - name: Test official road discovery
-        run: python -m unittest discover -s scripts -p 'test_bba_road_sources.py'
+      - name: Test official road and rail discovery
+        run: python -m unittest discover -s scripts -p 'test_bba_*sources.py'
       - name: Run BBA agents
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
