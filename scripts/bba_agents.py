@@ -14,6 +14,7 @@ from urllib.parse import urljoin, urlparse, quote
 import requests
 from bs4 import BeautifulSoup
 from bba_road_sources import run as discover_official_roads
+from bba_rail_sources import run as discover_rail_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'research-output'
@@ -33,6 +34,8 @@ NEWS_QUERIES = [
     'St Johns County FDOT road construction projects',
     'US 1 construction St Augustine future road projects',
     'CR 210 St Johns County future road improvements FDOT',
+    'St Johns County railroad crossing improvements Florida East Coast Railway projects',
+    'Jacksonville St Augustine regional rail JTA planning',
 ]
 PROJECT_ID = re.compile(r'\b\d{6}-\d(?:-\d)?\b')
 ROAD = re.compile(r'\b(?:SR|CR|US|I)[- ]?\d+[A-Za-z]?\b', re.I)
@@ -127,16 +130,17 @@ def match_project(pages):
     return list(projects.values())
 
 
-def ai_review(projects, pages, news, road_projects=None):
+def ai_review(projects, pages, news, road_projects=None, rail_projects=None):
     """Optional web-enabled AI investigator. Outputs research notes, never coordinates as fact."""
-    if not os.getenv('OPENAI_API_KEY') or not (projects or road_projects):
+    if not os.getenv('OPENAI_API_KEY') or not (projects or road_projects or rail_projects):
         return {'enabled': False, 'notes': 'AI investigation skipped (missing key or no identified project IDs)'}
     try:
         from openai import OpenAI
         client = OpenAI(timeout=75, max_retries=1)
         context = {'projects': projects[:12],
                    'official_page_excerpts': [{'url': p['url'], 'text': p['text'][:2200]} for p in pages[:15]],
-                   'news_leads': news[:12], 'structured_official_road_projects': (road_projects or [])[:30]}
+                   'news_leads': news[:12], 'structured_official_road_projects': (road_projects or [])[:30],
+                   'structured_official_rail_projects': (rail_projects or [])[:20]}
         response = client.responses.create(
             model=os.getenv('BBA_AI_MODEL', 'gpt-4.1-mini'),
             tools=[{'type': 'web_search'}],
@@ -152,6 +156,7 @@ def ai_review(projects, pages, news, road_projects=None):
 
 def main():
     road_report = discover_official_roads(ROOT, max_details=int(os.getenv("BBA_MAX_ROAD_DETAILS", "80")))
+    rail_report = discover_rail_sources(ROOT)
     pages = discover()
     news = news_sources()
     projects = match_project(pages)
@@ -176,7 +181,9 @@ def main():
         'news_leads': news,
         'road_discovery_status': road_report['status'],
         'road_projects': road_report['projects'],
-        'ai_investigation': ai_review(projects, pages, news, road_report['projects']),
+        'rail_discovery_status': rail_report['status'],
+        'rail_projects': rail_report['projects'],
+        'ai_investigation': ai_review(projects, pages, news, road_report['projects'], rail_report['projects']),
     }
     (OUT / 'review_queue.json').write_text(json.dumps(report, indent=2) + '\n')
     (OUT / 'source_pages.json').write_text(json.dumps([{'url': p['url'], 'title': p['title'], 'project_ids': sorted(set(PROJECT_ID.findall(p['text'])))} for p in pages], indent=2) + '\n')
@@ -184,6 +191,9 @@ def main():
     print('Outputs: research-output/review_queue.json, research-output/source_pages.json')
     print('SAFETY: live projects.json was NOT modified')
     print(f"Official road discovery: {road_report['status']}; {road_report['project_count']} projects")
+    print(f"Official rail discovery: {rail_report['status']}; {len(rail_report['projects'])} records")
+    if rail_report['status'] != 'completed':
+        raise SystemExit('Official rail discovery incomplete; inspect rail_projects.review.json')
     if road_report['status'] != 'completed':
         raise SystemExit('Official road discovery incomplete; inspect road_projects.review.json')
 

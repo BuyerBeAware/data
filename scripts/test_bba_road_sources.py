@@ -123,6 +123,7 @@ class AgentIntegrationTests(unittest.TestCase):
             stack.enter_context(patch.object(agent,'ROOT',root))
             stack.enter_context(patch.object(agent,'OUT',out))
             stack.enter_context(patch.object(agent,'discover_official_roads',return_value={'status':status,'projects':roads,'project_count':1}))
+            stack.enter_context(patch.object(agent,'discover_rail_sources',return_value={'status':'completed','projects':[]}))
             stack.enter_context(patch.object(agent,'discover',return_value=[]))
             stack.enter_context(patch.object(agent,'news_sources',return_value=[]))
             ai=stack.enter_context(patch.object(agent,'ai_review',return_value={'enabled':False}))
