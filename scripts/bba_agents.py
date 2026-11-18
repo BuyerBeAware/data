@@ -15,6 +15,7 @@ import requests
 from bs4 import BeautifulSoup
 from bba_road_sources import run as discover_official_roads
 from bba_rail_sources import run as discover_rail_sources
+from bba_approval_sources import run as discover_approval_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'research-output'
@@ -36,6 +37,10 @@ NEWS_QUERIES = [
     'CR 210 St Johns County future road improvements FDOT',
     'St Johns County railroad crossing improvements Florida East Coast Railway projects',
     'Jacksonville St Augustine regional rail JTA planning',
+    'Shands Bridge replacement First Coast Expressway SR 23 construction',
+    'First Coast Expressway St Johns River Crossing record of decision federal approval',
+    'Florida highway bridge USACE Coast Guard permit environmental approval',
+    'Florida FDOT highway PD&E future planned completed projects',
 ]
 PROJECT_ID = re.compile(r'\b\d{6}-\d(?:-\d)?\b')
 ROAD = re.compile(r'\b(?:SR|CR|US|I)[- ]?\d+[A-Za-z]?\b', re.I)
@@ -130,14 +135,17 @@ def match_project(pages):
     return list(projects.values())
 
 
-def ai_review(projects, pages, news, road_projects=None, rail_projects=None):
+def ai_review(projects, pages, news, road_projects=None, rail_projects=None, approvals=None):
     """Optional web-enabled AI investigator. Outputs research notes, never coordinates as fact."""
     if not os.getenv('OPENAI_API_KEY') or not (projects or road_projects or rail_projects):
         return {'enabled': False, 'notes': 'AI investigation skipped (missing key or no identified project IDs)'}
     try:
         from openai import OpenAI
         client = OpenAI(timeout=75, max_retries=1)
-        context = {'projects': projects[:12],
+        approval_context = {'programs': [
+            {k: p[k] for k in ('id','title','source_url','historical_completion_evidence')} for p in (approvals or {}).get('programs',[])],
+            'notices': [{k: n.get(k) for k in ('id','title','source_url','publication_date','approval_status','financial_project_ids','current_construction_status')} for n in (approvals or {}).get('notices',[])]}
+        context = {'approval_history': approval_context, 'projects': projects[:12],
                    'official_page_excerpts': [{'url': p['url'], 'text': p['text'][:2200]} for p in pages[:15]],
                    'news_leads': news[:12], 'structured_official_road_projects': (road_projects or [])[:30],
                    'structured_official_rail_projects': (rail_projects or [])[:20]}
@@ -145,7 +153,7 @@ def ai_review(projects, pages, news, road_projects=None, rail_projects=None):
             model=os.getenv('BBA_AI_MODEL', 'gpt-4.1-mini'),
             tools=[{'type': 'web_search'}],
             input=[
-                {'role': 'system', 'content': 'Investigate North Florida road projects. Identify corroborating primary source URLs, precise site address/road endpoints, FDOT IDs, conflicts, and missing evidence. Never guess latitude/longitude. Never claim a source was checked unless actually checked. Return concise text, clearly distinguishing verified from suggested.'},
+                {'role': 'system', 'content': 'Investigate Florida major roads and bridges across county boundaries, including completed, current and planned projects. Separate program, segment, approval and construction status. Never use a historic approval date or legal challenge deadline as a construction date. Never associate a multi-project notice with one project without explicit evidence. Identify corroborating primary source URLs, precise site address/road endpoints, FDOT IDs, conflicts, and missing evidence. Never guess latitude/longitude. Never claim a source was checked unless actually checked. Return concise text, clearly distinguishing verified from suggested.'},
                 {'role': 'user', 'content': json.dumps(context)[:28000]},
             ],
         )
@@ -155,7 +163,13 @@ def ai_review(projects, pages, news, road_projects=None, rail_projects=None):
 
 
 def main():
-    road_report = discover_official_roads(ROOT, max_details=int(os.getenv("BBA_MAX_ROAD_DETAILS", "80")))
+    approval_report = discover_approval_sources(ROOT, max_details=int(os.getenv("BBA_MAX_APPROVAL_DETAILS", "250")))
+    segments = [s for p in approval_report['programs'] for s in p['segments']]
+    road_report = discover_official_roads(ROOT, max_details=int(os.getenv("BBA_MAX_ROAD_DETAILS", "250")), extra_listings=segments)
+    # Link by an exact source identifier only. Retain notices separately because one can cover many roads.
+    for notice in approval_report['notices']:
+        notice['related_road_ids'] = sorted({p['id'] for p in road_report['projects']
+            if set(p.get('financial_project_ids', [])).intersection(notice['financial_project_ids'])})
     rail_report = discover_rail_sources(ROOT)
     pages = discover()
     news = news_sources()
@@ -183,7 +197,12 @@ def main():
         'road_projects': road_report['projects'],
         'rail_discovery_status': rail_report['status'],
         'rail_projects': rail_report['projects'],
-        'ai_investigation': ai_review(projects, pages, news, road_report['projects'], rail_report['projects']),
+        'approval_discovery_status': approval_report['status'],
+        'road_programs': approval_report['programs'],
+        'approval_notices': approval_report['notices'],
+        'approval_coverage': approval_report['coverage'],
+        'ai_investigation': ai_review(projects, pages, news, road_report['projects'], rail_report['projects'],
+            {'programs': approval_report['programs'], 'notices': approval_report['notices'][:12]}),
     }
     (OUT / 'review_queue.json').write_text(json.dumps(report, indent=2) + '\n')
     (OUT / 'source_pages.json').write_text(json.dumps([{'url': p['url'], 'title': p['title'], 'project_ids': sorted(set(PROJECT_ID.findall(p['text'])))} for p in pages], indent=2) + '\n')
@@ -192,6 +211,8 @@ def main():
     print('SAFETY: live projects.json was NOT modified')
     print(f"Official road discovery: {road_report['status']}; {road_report['project_count']} projects")
     print(f"Official rail discovery: {rail_report['status']}; {len(rail_report['projects'])} records")
+    if approval_report['status'] != 'completed':
+        raise SystemExit('Major-road approvals incomplete; inspect major_road_approvals.review.json')
     if rail_report['status'] != 'completed':
         raise SystemExit('Official rail discovery incomplete; inspect rail_projects.review.json')
     if road_report['status'] != 'completed':

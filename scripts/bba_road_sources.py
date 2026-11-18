@@ -159,8 +159,13 @@ def parse_detail(html,listing):
         finish=fields.get('Construction End') or fields.get('Est. Completion') or None
         documents_node=s
         last_updated=clean(s.find('time')) or None
-    if not title or not about:
-        raise SourceError('Project title or description missing')
+    if not title:
+        raise SourceError('Project title missing')
+    description_status='provided' if about else 'not_provided'
+    if not about:
+        if not (is_nfl and s.select_one('#overview') is not None and county and numbers):
+            raise SourceError('Project description or recognized detail layout missing')
+        about='Description not provided by the official project page.'
     if listing.get('listing_county') and county_keys(county)!=county_keys(listing['listing_county']):
         raise SourceError('List and detail county disagree')
     docs={}
@@ -178,7 +183,7 @@ def parse_detail(html,listing):
             'cities':fields.get('Cities') or fields.get('City') or None,
             'phase':phase,'status':status,
             'is_st_johns_county':'stjohns' in county_names,
-            'description':about[:12000], 'schedule':{'start':start,'completion':finish},
+            'description':about[:12000], 'description_status':description_status, 'schedule':{'start':start,'completion':finish},
             'funding_status':'Not established; inspect linked project documents',
             'source_last_updated':last_updated,'documents':list(docs.values()),
             'latitude':None,'longitude':None,'geometry':None,'location_status':'needs_verified_alignment',
@@ -192,19 +197,21 @@ def write(path,payload):
     temp.replace(path)
 
 
-def run(root=None,client=None,max_details=80):
+def run(root=None,client=None,max_details=250,extra_listings=None):
     root=Path(root) if root else Path(__file__).resolve().parents[1]
     output=root/'research-output';output.mkdir(parents=True,exist_ok=True)
     client=client or Client()
     report={'schema_version':1,'generated_at':datetime.now(timezone.utc).isoformat(),
             'status':'completed','publication_allowed':False,'sources':[], 'projects':[],
-            'coverage':'St. Johns active/future NFLRoads lists and CFLRoads US-1 future/construction lists; not all Florida projects'}
-    listings=[]
+            'coverage':'All counties in NFLRoads active/future lists and CFLRoads US-1 future/construction lists; not all Florida districts or completed projects'}
+    listings=list(extra_listings or [])
     def error(url,exc):
         report['status']='partial'
         report['sources'].append({'url':url,'status':'failed','error':str(exc) if isinstance(exc,SourceError) else type(exc).__name__})
     try:
-        county_id=nfl_county_id(client.read(NFL_LIST))
+        # Validate the known selector, but do not constrain a regional highway to one county.
+        nfl_county_id(client.read(NFL_LIST))
+        county_id='0'
         for typ,status in [('1','Active'),('2','Future')]:
             payload={'projectType':typ,'countyId':county_id,'cityId':'0','roadId':'0','projectCategoryId':'0','searchPhrase':''}
             url=NFL_LIST+'/GetResults'
@@ -229,7 +236,8 @@ def run(root=None,client=None,max_details=80):
         report['detail_budget_exceeded']=len(urls)-max_details
     def read(url):
         try:
-            item=parse_detail(client.read(url),by_url[url][0])
+            primary=next((l for l in by_url[url] if l.get('listing_county')),by_url[url][0])
+            item=parse_detail(client.read(url),primary)
             item['discovered_in']=sorted({l['discovery_url'] for l in by_url[url]})
             item['listing_statuses']=sorted({l['listing_status'] for l in by_url[url]})
             return item,None
@@ -240,11 +248,16 @@ def run(root=None,client=None,max_details=80):
             if exc:error(url,exc);continue
             key=item['id']
             if key in identities:
-                # Retain separate conflicting sources for review, never blend counties or schedules.
-                report['status']='partial'
+                # A financial ID may cover multiple source projects. Preserve distinct
+                # records under a shared group; never merge their counties or schedules.
                 item['identity_conflict']=True
-            identities[key]=True
+                item['financial_identity_group']=key
+                item['id']=key+'--'+urlsplit(url).hostname+'-'+item['site_project_id']
+                identities[key]['identity_conflict']=True
+                identities[key]['financial_identity_group']=key
+            identities.setdefault(key,item)
             report['projects'].append(item)
+    report['identity_conflict_count']=sum(bool(p.get('identity_conflict')) for p in report['projects'])
     report['project_count']=len(report['projects'])
     report['st_johns_project_count']=sum(p['is_st_johns_county'] for p in report['projects'])
     write(output/'road_projects.review.json',report)
