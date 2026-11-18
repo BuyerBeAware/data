@@ -16,7 +16,7 @@ class RoadTests(unittest.TestCase):
     def test_empty_official_overview_is_retained_without_inventing_description(self):
         listing={'source_url':r.NFL+'ProjectDetails.aspx?p=5707','site_project_id':'5707',
                  'listing_status':'Future','listing_county':'Baker'}
-        raw=(FIX/'nfl-detail-empty-overview.html').read_text()
+        raw='<span id="MainContent_ProjectTitle">Hurricane Helene I-10 rest area repair</span><div id="overview"><div class="SectionTitle">Overview</div></div><table class="ProjectDetails"><tr><td>Project #:</td><td>432054-5</td></tr><tr><td>Counties</td><td>Baker</td></tr></table>'
         item=r.parse_detail(raw,listing)
         self.assertEqual(item['description_status'],'not_provided')
         self.assertEqual(item['county'],'Baker')
