@@ -13,6 +13,16 @@ class RoadTests(unittest.TestCase):
                  'listing_status':'Future','discovery_url':r.NFL_LIST,'listing_county':'St. Johns'}
         return r.parse_detail((FIX/('nfl-detail-'+pid+'.html')).read_text(),listing)
 
+    def test_empty_official_overview_is_retained_without_inventing_description(self):
+        listing={'source_url':r.NFL+'ProjectDetails.aspx?p=5707','site_project_id':'5707',
+                 'listing_status':'Future','listing_county':'Baker'}
+        raw='<span id="MainContent_ProjectTitle">Hurricane Helene I-10 rest area repair</span><div id="overview"><div class="SectionTitle">Overview</div></div><table class="ProjectDetails"><tr><td>Project #:</td><td>432054-5</td></tr><tr><td>Counties</td><td>Baker</td></tr></table>'
+        item=r.parse_detail(raw,listing)
+        self.assertEqual(item['description_status'],'not_provided')
+        self.assertEqual(item['county'],'Baker')
+        self.assertIsNone(item['latitude'])
+        with self.assertRaises(r.SourceError):r.parse_detail(raw.replace('overview','unknown'),listing)
+
     def test_real_cr210_has_financial_id_documents_and_unknown_schedule(self):
         item=self.nfl('6090')
         self.assertEqual(item['financial_project_id'],'441371-1')
@@ -75,6 +85,7 @@ class RoadTests(unittest.TestCase):
             def read(self,url,payload=None):
                 if url==r.NFL_LIST:return '<select id="county_id"><option value="225">St. Johns</option></select>'
                 if url.endswith('/GetResults'):
+                    if payload['countyId']!='0':raise AssertionError('County restriction returned')
                     return json.dumps({'d':"<table id='ProjectSearchResults'><tr><td><a href='ProjectDetails.aspx?p=6090'>CR 210</a></td><td>TBD</td><td>St. Johns</td></tr></table>"})
                 if '/projects/' in url:return (FIX/'cfl-list.html').read_text()
                 if 'p=6090' in url:return (FIX/'nfl-detail-6090.html').read_text()
@@ -120,6 +131,7 @@ class AgentIntegrationTests(unittest.TestCase):
             root=Path(d);out=root/'research-output';out.mkdir()
             (root/'projects.json').write_text('preserve')
             roads=[{'id':'fdot-441371-1','county':'St. Johns','publication_allowed':False}]
+            stack.enter_context(patch.object(agent,'discover_approval_sources',return_value={'status':'completed','programs':[],'notices':[],'coverage':{}}))
             stack.enter_context(patch.object(agent,'ROOT',root))
             stack.enter_context(patch.object(agent,'OUT',out))
             stack.enter_context(patch.object(agent,'discover_official_roads',return_value={'status':status,'projects':roads,'project_count':1}))
