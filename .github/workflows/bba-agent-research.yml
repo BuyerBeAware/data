@@ -23,7 +23,12 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Test official roads, rail and approval discovery
         run: python -m unittest discover -s scripts -p 'test_bba_*sources.py'
+      - name: Test location correlation
+        run: python -m unittest discover -s scripts -p 'test_bba_location_correlation.py'
+      - name: Review county pin and description agreement
+        run: python scripts/bba_location_correlation.py
       - name: Run BBA agents
+        if: ${{ !cancelled() }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           BBA_MAX_PAGES: '35'
