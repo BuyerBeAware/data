@@ -53,9 +53,11 @@ def query(endpoint, params):
 
 def road_geometry(route, lng, lat):
     family, number = route.split('-')
-    names = {'I': 'Interstate ', 'US': 'US ', 'SR': 'State Road ', 'CR': 'County Road '}
+    # NAME includes directional suffixes (US 1 N/S, County Road 210 W).
+    # Exact route/type identity includes both carriageways without ramps or ALT routes.
+    types = {'I': 'I', 'US': 'US', 'SR': 'STATE ROAD', 'CR': 'COUNTY ROAD'}
     features, url = query(ROAD, {
-        'where': "NAME='" + names[family] + number + "'",
+        'where': "ROADNAME='" + number + "' AND PRETYPE='" + types[family] + "'",
         'geometry': f'{lng-.1},{lat-.1},{lng+.1},{lat+.1}',
         'geometryType': 'esriGeometryEnvelope', 'inSR': '4326',
         'outFields': 'OBJECTID,NAME,ROADNAME,PRETYPE', 'returnGeometry': 'true'})

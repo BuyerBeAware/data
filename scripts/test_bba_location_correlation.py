@@ -1,6 +1,7 @@
 import copy
 import unittest
-from bba_location_correlation import constraints, check_side, review, apply_gate
+from unittest.mock import patch
+from bba_location_correlation import constraints, check_side, review, apply_gate, road_geometry
 
 
 class LocationTests(unittest.TestCase):
@@ -78,6 +79,13 @@ class LocationTests(unittest.TestCase):
         self.candidate['lng'] = float('nan')
         self.assertNotIn(review(self.candidate, self.road, self.polygon)['status'],
                          ('directionally_consistent_not_parcel_verified',))
+
+    def test_route_identity_includes_directional_suffixes_excludes_alternate_route(self):
+        with patch('bba_location_correlation.query', return_value=([], 'url')) as get:
+            for route, expected in [('US-1', "ROADNAME='1' AND PRETYPE='US'"),
+                                    ('CR-210', "ROADNAME='210' AND PRETYPE='COUNTY ROAD'")]:
+                road_geometry(route, -81.5, 30.1)
+                self.assertEqual(get.call_args[0][1]['where'], expected)
 
 
 if __name__ == '__main__':
