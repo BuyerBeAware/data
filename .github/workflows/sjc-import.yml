@@ -19,10 +19,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check syntax
-        run: python -m py_compile scripts/sjc_import.py
+      - name: Test location correlation
+        run: python -m unittest discover -s scripts -p 'test_bba_location_correlation.py'
       - name: Import official county records
         run: python scripts/sjc_import.py
+      - name: Gate test pins against description evidence
+        run: python scripts/bba_location_correlation.py --existing-import
       - name: Confirm published data unchanged
         if: always()
         run: git diff --exit-code -- projects.json
@@ -34,5 +36,6 @@ jobs:
           path: |
             research-output/sjc_candidates.json
             research-output/sjc_projects.test.json
+            research-output/location_correlation.review.json
           if-no-files-found: warn
           retention-days: 14
