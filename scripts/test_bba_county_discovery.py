@@ -44,6 +44,12 @@ class DiscoveryTests(unittest.TestCase):
         for county in config['counties']:
             for source in county['gis']:
                 self.assertFalse({'pocname','pocemail','pocphone','Internal_Notes','Folder_Link'} & set(source['fields']))
+    def test_new_state_does_not_inherit_florida_agencies(self):
+        county={'id':'GA-13127','name':'Glynn County','state':'GA','queries':[],'news_domains':[],
+                'agency_queries':['site:dot.ga.gov project']}
+        queries=' '.join(q for q,c in b.search_queries(county))
+        self.assertIn('dot.ga.gov',queries);self.assertIn('GA',queries)
+        self.assertNotIn('Florida',queries);self.assertNotIn('sjrwmd',queries)
     def test_description_and_parent_extraction(self):
         row=b.record('a',COUNTY,'Station','',['https://webapp.sjcfl.us/CSubmitalWeb/Record?ApplNum=2025000003&ApplType=CGCP'],record_number='2025000003')
         response=Mock(text='<h3>CGCP 2025000003</h3><p><b>Proj Desc:</b><span id="ContentPlaceHolder1_lblProjDesc">Clearing only; future facility needs separate review.</span></p><a href="Record.aspx?ApplType=SMADJ&amp;ApplNum=2024000052   ">SMADJ-2024000052</a><a href="ProjData?ApplNum=2025000003">Data</a>')

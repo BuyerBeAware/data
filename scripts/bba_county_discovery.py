@@ -244,9 +244,8 @@ def search_queries(county):
         queries.append((f'site:{domain} "{county["name"]}" development construction', 'news'))
     for site in ('reddit.com', 'facebook.com/groups', 'nextdoor.com'):
         queries.append((f'site:{site} "{county["name"]}" development construction road fire station', 'public-community'))
-    for topic in ('site:sjrwmd.com permit', 'site:floridadep.gov permit', 'site:fdot.gov project',
-                  'site:federalregister.gov highway', 'developer site plan', 'capital improvement budget bid zoning agenda'):
-        queries.append((f'"{county["name"]}" Florida {topic}', 'official-or-developer-lead'))
+    for topic in county.get('agency_queries', []) + ['developer site plan', 'capital improvement budget bid zoning agenda']:
+        queries.append((f'"{county["name"]}" {county["state"]} {topic}', 'official-or-developer-lead'))
     return queries
 
 
