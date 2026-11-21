@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "counties": [
+    {
+      "id": "FL-12109", "state": "FL", "name": "St Johns County", "geoid": "12109",
+      "register": {"base": "https://webapp.sjcfl.us/CSubmitalWeb/", "types": ["CGCP", "PREAPP", "MODCP", "MDP", "MAJMOD", "PUD", "REZ"], "history_start": 1998},
+      "gis": [],
+      "official_pages": ["https://www.sjcfl.us/departments/fire-rescue/", "https://www.sjcfl.us/departments/growth-mgmt/", "https://www.sjcfl.us/departments/public-works/", "https://nflroads.com/FirstCoastExpressway.aspx"],
+      "news_domains": ["jaxtoday.org", "news4jax.com", "staugustine.com", "actionnewsjax.com", "firstcoastnews.com"],
+      "queries": ["St Johns County Florida clearing grading permit fire station", "Twin Creeks Beachwalk fire station Accolade", "CR 210 US 1 St Johns development construction", "St Johns County capital improvement zoning utilities development"],
+      "coverage_gaps": ["Building permits outside the selected commercial pilot", "Older register years rotate; not a complete historic archive", "Private community groups", "Separate municipal permit registers"]
+    },
+    {
+      "id": "FL-12035", "state": "FL", "name": "Flagler County", "geoid": "12035",
+      "gis": [
+        {"id": "palm-coast-planning", "authority": "Palm Coast", "url": "https://services1.arcgis.com/tpnsCwhQRDqwL3mq/arcgis/rest/services/Planning_Projects_Revised_View/FeatureServer/0", "trust_url": "https://www.palmcoast.gov/newsroom/home/details/new-gis-hub", "map_url": "https://experience.arcgis.com/experience/b5cb5239bec440d3a0791b90205eb7dc", "oid": "FID", "identity": "Applicatio", "name": "Current_Pr", "description": "Project_De", "status": "APPLY", "link": "Link", "fields": ["FID", "Applicatio", "Applicat_1", "Current_Pr", "Project_De", "APPLY", "Link", "Display"]},
+        {"id": "palm-coast-capital", "authority": "Palm Coast", "url": "https://services1.arcgis.com/tpnsCwhQRDqwL3mq/arcgis/rest/services/InfrastructureProjects_v1_allfundedprojects/FeatureServer/0", "trust_url": "https://www.palmcoast.gov/geographic-information-system", "map_url": "https://www.palmcoast.gov/geographic-information-system", "oid": "OBJECTID", "identity": "GlobalID", "name": "projname", "description": "projdesc", "status": "projstatus", "link": "publicnotice", "fields": ["OBJECTID", "GlobalID", "projid", "projname", "projdesc", "projtype", "projstatus", "projphase", "phasestatus", "fiscalyr", "planstart", "planend", "actstart", "actend", "publicnotice", "projupdate", "funded"]},
+        {"id": "flagler-development", "authority": "Flagler County GIS", "url": "https://services3.arcgis.com/hSKL9bYjhP4rHxSD/arcgis/rest/services/Infrastructure_Projects/FeatureServer/558", "trust_url": "https://flaglercountyfl-fcmaps.opendata.arcgis.com/", "map_url": "https://flaglercountyfl-fcmaps.opendata.arcgis.com/", "oid": "OBJECTID", "identity": "GlobalID", "name": "projname", "description": "Comments", "status": "status", "link": "url", "fields": ["OBJECTID", "GlobalID", "projname", "status", "Municipality", "Working_Address", "Project_Type", "AR_Number", "AR_Number_FinalPlat", "proj_num", "url", "Comments", "fka"]}
+      ],
+      "official_pages": ["https://www.palmcoast.gov/westward-expansion", "https://www.palmcoast.gov/cls", "https://www.palmcoast.gov/developmentprojectsearch", "https://www.flaglercounty.gov/County-Services/Geographic-Information-Systems", "https://www.r2ctpo.org/", "https://www.cflroads.com/projects/County/Flagler"],
+      "news_domains": ["flaglerlive.com", "observerlocalnews.com", "flaglernewsweekly.com", "news-journalonline.com", "news4jax.com"],
+      "queries": ["Flagler County Palm Coast development clearing grading permit", "Flagler County fire station road utility capital improvement", "Palm Coast Matanzas Woods loop road westward expansion", "Palm Coast DC BLOX planning site plan", "Flagler Beach Bunnell development zoning highway construction"],
+      "coverage_gaps": ["Bunnell municipal permits", "Flagler Beach municipal permits", "Beverly Beach and Marineland municipal records", "Private community groups", "County building permits not represented by development GIS"]
+    }
+  ]
+}
