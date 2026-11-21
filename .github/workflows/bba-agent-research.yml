@@ -27,6 +27,9 @@ jobs:
         run: python -m unittest discover -s scripts -p 'test_bba_location_correlation.py'
       - name: Review county pin and description agreement
         run: python scripts/bba_location_correlation.py
+      - name: Research long-range plans and population search priorities
+        if: ${{ !cancelled() }}
+        run: python scripts/bba_long_range_sources.py --max-documents 40
       - name: Run BBA agents
         if: ${{ !cancelled() }}
         env:

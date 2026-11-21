@@ -78,11 +78,26 @@ def extract(url, html):
     return {'url': url, 'title': title, 'text': text, 'links': sorted(set(links))[:80]}
 
 
+def long_range_review():
+    path = OUT / 'long_range.review.json'
+    if not path.exists():
+        return {'status': 'not_run', 'sources': [], 'search_tasks': []}
+    try:
+        data = json.loads(path.read_text())
+        if not isinstance(data.get('sources'), list) or not isinstance(data.get('search_tasks'), list):
+            raise ValueError('invalid long-range report')
+        return data
+    except (ValueError, OSError):
+        return {'status': 'invalid_report', 'sources': [], 'search_tasks': []}
+
+
 def news_sources():
     """Google News RSS provides leads only, not geographic proof."""
     from xml.etree import ElementTree as ET
     leads = []
-    for query in NEWS_QUERIES:
+    tasks = long_range_review()['search_tasks']
+    research_queries = [t['query'] for t in tasks[:12] if isinstance(t.get('query'), str)]
+    for query in list(dict.fromkeys(NEWS_QUERIES + research_queries)):
         url = 'https://news.google.com/rss/search?q=' + quote(query) + '&hl=en-US&gl=US&ceid=US:en'
         xml = fetch(url)
         if not xml:
@@ -99,7 +114,10 @@ def news_sources():
 
 
 def discover():
-    queue = list(SEEDS)
+    official_long_range = [s['sourceURL'] for s in long_range_review()['sources']
+                           if s.get('checkStatus') == 'checked' and
+                           urlparse(s.get('sourceURL', '')).hostname in {'www.sjcfl.us', 'sjcfl.us', 'northfloridatpo.com', 'www.fdot.gov', 'fdot.gov', 'www.edr.state.fl.us', 'edr.state.fl.us'}]
+    queue = list(dict.fromkeys(official_long_range + SEEDS))
     seen = set()
     pages = []
     while queue and len(seen) < MAX_PAGES:
@@ -135,7 +153,7 @@ def match_project(pages):
     return list(projects.values())
 
 
-def ai_review(projects, pages, news, road_projects=None, rail_projects=None, approvals=None):
+def ai_review(projects, pages, news, road_projects=None, rail_projects=None, approvals=None, planning=None):
     """Optional web-enabled AI investigator. Outputs research notes, never coordinates as fact."""
     if not os.getenv('OPENAI_API_KEY') or not (projects or road_projects or rail_projects):
         return {'enabled': False, 'notes': 'AI investigation skipped (missing key or no identified project IDs)'}
@@ -145,7 +163,13 @@ def ai_review(projects, pages, news, road_projects=None, rail_projects=None, app
         approval_context = {'programs': [
             {k: p[k] for k in ('id','title','source_url','historical_completion_evidence')} for p in (approvals or {}).get('programs',[])],
             'notices': [{k: n.get(k) for k in ('id','title','source_url','publication_date','approval_status','financial_project_ids','current_construction_status')} for n in (approvals or {}).get('notices',[])]}
-        context = {'approval_history': approval_context, 'projects': projects[:12],
+        plan = planning or {}
+        planning_context = {'status': plan.get('status'), 'coverage': plan.get('coverage'),
+            'search_priorities': plan.get('search_tasks', [])[:6],
+            'official_plan_evidence': [{'url': d['url'], 'corridor_evidence': d.get('corridor_evidence', [])[:2]}
+                for d in plan.get('documents', []) if d.get('corridor_evidence')][:8],
+            'plan_project_ids': plan.get('unresolved_project_candidates', [])[:12]}
+        context = {'long_range_research': planning_context, 'approval_history': approval_context, 'projects': projects[:12],
                    'official_page_excerpts': [{'url': p['url'], 'text': p['text'][:2200]} for p in pages[:15]],
                    'news_leads': news[:12], 'structured_official_road_projects': (road_projects or [])[:30],
                    'structured_official_rail_projects': (rail_projects or [])[:20]}
@@ -153,7 +177,7 @@ def ai_review(projects, pages, news, road_projects=None, rail_projects=None, app
             model=os.getenv('BBA_AI_MODEL', 'gpt-4.1-mini'),
             tools=[{'type': 'web_search'}],
             input=[
-                {'role': 'system', 'content': 'Investigate Florida major roads and bridges across county boundaries, including completed, current and planned projects. Separate program, segment, approval and construction status. Never use a historic approval date or legal challenge deadline as a construction date. Never associate a multi-project notice with one project without explicit evidence. Identify corroborating primary source URLs, precise site address/road endpoints, FDOT IDs, conflicts, and missing evidence. Never guess latitude/longitude. Never claim a source was checked unless actually checked. Return concise text, clearly distinguishing verified from suggested.'},
+                {'role': 'system', 'content': 'Investigate Florida major roads and bridges across county boundaries, including completed, current and planned projects. Separate program, segment, approval and construction status. Never use a historic approval date or legal challenge deadline as a construction date. Never associate a multi-project notice with one project without explicit evidence. Identify corroborating primary source URLs, precise site address/road endpoints, FDOT IDs, conflicts, and missing evidence. Investigate zoning, comprehensive-plan amendments, LRTP needs and cost-feasible plans, capital programs, highway expansions and rail plans through the latest published horizon, not just five years. Use growth priorities to decide where to search for official proposals; never convert population scenarios into a confirmed project, map pin or project year. Keep plan horizon, phase funding windows and project construction schedules distinct. Never guess latitude/longitude. Never claim a source was checked unless actually checked. Return concise text, clearly distinguishing verified from suggested.'},
                 {'role': 'user', 'content': json.dumps(context)[:28000]},
             ],
         )
@@ -201,8 +225,10 @@ def main():
         'road_programs': approval_report['programs'],
         'approval_notices': approval_report['notices'],
         'approval_coverage': approval_report['coverage'],
+        'long_range_research_status': long_range_review().get('status'),
+        'long_range_search_tasks': long_range_review().get('search_tasks', []),
         'ai_investigation': ai_review(projects, pages, news, road_report['projects'], rail_report['projects'],
-            {'programs': approval_report['programs'], 'notices': approval_report['notices'][:12]}),
+            {'programs': approval_report['programs'], 'notices': approval_report['notices'][:12]}, long_range_review()),
     }
     (OUT / 'review_queue.json').write_text(json.dumps(report, indent=2) + '\n')
     (OUT / 'source_pages.json').write_text(json.dumps([{'url': p['url'], 'title': p['title'], 'project_ids': sorted(set(PROJECT_ID.findall(p['text'])))} for p in pages], indent=2) + '\n')
