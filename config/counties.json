@@ -5,7 +5,7 @@
       "id": "FL-12109", "state": "FL", "name": "St Johns County", "geoid": "12109",
       "register": {"base": "https://webapp.sjcfl.us/CSubmitalWeb/", "types": ["CGCP", "PREAPP", "MODCP", "MDP", "MAJMOD", "PUD", "REZ"], "history_start": 1998},
       "gis": [],
-      "official_pages": ["https://www.sjcfl.us/departments/fire-rescue/", "https://www.sjcfl.us/departments/growth-management-department/", "https://www.sjcfl.us/departments/public-works/", "https://nflroads.com/FirstCoastExpressway.aspx"],
+      "official_pages": ["https://www.sjcfl.us/departments/fire-rescue/", "https://www.sjcfl.us/departments/growth-mgmt/", "https://www.sjcfl.us/departments/public-works/", "https://nflroads.com/FirstCoastExpressway.aspx"],
       "news_domains": ["jaxtoday.org", "news4jax.com", "staugustine.com", "actionnewsjax.com", "firstcoastnews.com"],
       "queries": ["St Johns County Florida clearing grading permit fire station", "Twin Creeks Beachwalk fire station Accolade", "CR 210 US 1 St Johns development construction", "St Johns County capital improvement zoning utilities development"],
       "coverage_gaps": ["Building permits outside the selected commercial pilot", "Older register years rotate; not a complete historic archive", "Private community groups", "Separate municipal permit registers"]
