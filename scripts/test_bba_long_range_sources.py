@@ -84,7 +84,6 @@ class LongRangeTests(unittest.TestCase):
             self.assertFalse(r['publication_allowed'])
             self.assertTrue(any(x['horizon']==2055 for x in r['sources']))
 
-if __name__=='__main__':unittest.main()
 
 class LongRangeAgentIntegrationTests(unittest.TestCase):
     def test_growth_search_tasks_are_actually_used_for_news_corroboration(self):
@@ -108,3 +107,26 @@ class LongRangeAgentIntegrationTests(unittest.TestCase):
                 pages=agent.discover()
                 self.assertEqual(len(pages),1)
                 self.assertEqual(fetch.call_args[0][0],'https://www.sjcfl.us/comprehensive-plan/')
+
+
+class ResearchBudgetTests(unittest.TestCase):
+    def test_pdf_timeout_restores_the_previous_alarm_handler(self):
+        import signal
+        handler=signal.getsignal(signal.SIGALRM)
+        with patch.object(m,'PdfReader',side_effect=TimeoutError('too slow')):
+            with self.assertRaises(TimeoutError):m.pdf_text(b'%PDF')
+        self.assertEqual(signal.getsignal(signal.SIGALRM),handler)
+        self.assertEqual(signal.getitimer(signal.ITIMER_REAL),(0.0,0.0))
+
+    def test_latest_official_population_link_is_used(self):
+        latest='https://www.edr.state.fl.us/Content/population-demographics/data/MediumProjections_2026.pdf'
+        def doc(url,getter):
+            return {'url':url,'resolved_url':url,'text':table().replace('Estimates 2025','Estimates 2026') if url==latest else 'official plan',
+                    'links':[{'url':latest,'title':'County projections'}] if url==m.SOURCES[-1][3] else [],'sha256':'test'}
+        with tempfile.TemporaryDirectory() as d,patch.object(m,'document',side_effect=doc):
+            report=m.run(Path(d))
+            self.assertEqual(len(report['population']),67)
+            self.assertEqual(report['population'][0]['source_url'],latest)
+            self.assertEqual(report['population'][0]['base_year'],2026)
+
+if __name__=='__main__':unittest.main()

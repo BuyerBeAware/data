@@ -9,6 +9,8 @@ import io
 import json
 from pathlib import Path
 import re
+import signal
+import time
 from urllib.parse import urljoin, urlsplit, urlunsplit
 import requests
 from bs4 import BeautifulSoup
@@ -42,6 +44,7 @@ def read(url):
     url = canonical(url)
     # Validate every redirect before following; no credentials or private endpoints.
     session = requests.Session()
+    expires=time.monotonic()+45
     for _ in range(5):
         with session.get(url, headers={'User-Agent':'BuyerBeAware long-range research'}, timeout=30,
                          stream=True, allow_redirects=False) as response:
@@ -52,22 +55,38 @@ def read(url):
             chunks=[];size=0
             for chunk in response.iter_content(65536):
                 size += len(chunk)
+                if time.monotonic()>expires:raise TimeoutError('Research download time budget exceeded')
                 if size > 40_000_000: raise ValueError('Research document exceeds size budget')
                 chunks.append(chunk)
             return b''.join(chunks), response.headers.get('Content-Type',''), url
     raise ValueError('Too many redirects')
 
 
+def pdf_text(body):
+    # Some official PDFs contain extremely expensive vector/font streams. Bound
+    # parsing as well as bytes/pages so one document cannot stall the daily job.
+    def expired(signum, frame):
+        raise TimeoutError('PDF parsing exceeded 25 seconds')
+    old_handler=signal.signal(signal.SIGALRM,expired)
+    old_timer=signal.setitimer(signal.ITIMER_REAL,25)
+    try:
+        pdf=PdfReader(io.BytesIO(body))
+        if len(pdf.pages)>800:raise ValueError('PDF page budget exceeded; manual follow-up required')
+        pages=[p.extract_text() or '' for p in pdf.pages]
+        full_text='\n'.join(pages)
+        if len(full_text)>2_000_000:raise ValueError('PDF text budget exceeded; manual follow-up required')
+        return full_text,len(pages)
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,*old_timer)
+        signal.signal(signal.SIGALRM,old_handler)
+
+
 def document(url, getter=read):
     body, kind, final = getter(url)
     if 'pdf' in kind or body.startswith(b'%PDF'):
-        pdf=PdfReader(io.BytesIO(body))
-        if len(pdf.pages)>800: raise ValueError('PDF page budget exceeded; manual follow-up required')
-        pages=[p.extract_text() or '' for p in pdf.pages]
-        full_text='\n'.join(pages)
-        if len(full_text)>2_000_000: raise ValueError('PDF text budget exceeded; manual follow-up required')
-        return {'url':url,'resolved_url':final,'text':full_text,
-                'page_count':len(pages),'links':[],'sha256':hashlib.sha256(body).hexdigest()}
+        text,count=pdf_text(body)
+        return {'url':url,'resolved_url':final,'text':text,
+                'page_count':count,'links':[],'sha256':hashlib.sha256(body).hexdigest()}
     if 'html' not in kind: raise ValueError('Unsupported source content type')
     soup=BeautifulSoup(body,'html.parser');links={}
     for a in soup.find_all('a',href=True):
@@ -149,7 +168,7 @@ def run(root, getter=read, max_documents=16):
     report={'schema_version':1,'generated_at':datetime.now(timezone.utc).isoformat(),
             'status':'completed','publication_allowed':False,'sources':[],'documents':[],
             'population':[],'search_tasks':[],'errors':[]}
-    docs=[];queue={};population_urls={POPULATION}
+    docs=[];queue={};population_urls={POPULATION};deadline=time.monotonic()+480
     for ident,title,scope,url,horizon,summary in SOURCES:
         row={'id':ident,'title':title,'scope':scope,'sourceURL':url,'horizon':horizon,
              'summary':summary,'checkedAt':report['generated_at'],'checkStatus':'unavailable'}
@@ -160,11 +179,19 @@ def run(root, getter=read, max_documents=16):
                 else: queue.setdefault(link['url'],link)
         except Exception as exc:report['errors'].append({'url':url,'error':type(exc).__name__})
         report['sources'].append(row)
-    for url in list(queue)[:max_documents]:
+    def priority(url):
+        # Current needs/cost-feasible/land-use plans before historical archives.
+        return (0 if any(t in url.lower() for t in ['needs_plan','cost_feasible','2050','tip-27']) else 1,url)
+    queued=sorted(queue,key=priority)
+    attempted=[]
+    for url in queued[:max_documents]:
+        if time.monotonic()>deadline:break
+        attempted.append(url)
+        print('Checking planning document: '+url,flush=True)
         try:docs.append(document(url,getter))
         except Exception as exc:report['errors'].append({'url':url,'error':type(exc).__name__})
-    report['document_budget']={'discovered':len(queue),'attempted':min(len(queue),max_documents),
-                               'remaining':[u for u in queue if u not in list(queue)[:max_documents]]}
+    report['document_budget']={'discovered':len(queue),'attempted':len(attempted),
+                               'remaining':[u for u in queued if u not in attempted]}
     try:
         population_url=max(population_urls,key=lambda u:int(re.search(r'([0-9]{4})\.pdf$',u)[1]))
         popdoc=document(population_url,getter);rows=population_rows(popdoc['text'],population_url);docs.append(popdoc)
@@ -185,7 +212,7 @@ def run(root, getter=read, max_documents=16):
         for match in re.finditer(r'\b[0-9]{6}-[0-9](?:-[0-9]{1,2})?\b',doc['text']):
             ident=match[0]
             row=candidates.setdefault(ident,{'financial_project_id':ident,'source_urls':[],
-                'evidence_kind':'official_plan_id_mention','construction_status':'not_verified',
+                'evidence_kind':'official_plan_id_mention','identifier_verification':'format_match_only_not_row_verified','construction_status':'not_verified',
                 'project_year':None,'latitude':None,'longitude':None,'publication_allowed':False})
             if doc['url'] not in row['source_urls']:row['source_urls'].append(doc['url'])
     report['unresolved_project_candidates']=list(candidates.values())
