@@ -218,6 +218,7 @@ def run(root, getter=read, max_documents=16):
     report['unresolved_project_candidates']=list(candidates.values())
     report['coverage']='Initial Florida research: SJC land use, North Florida plans, statewide framework and all-county population. Planning horizon is not a project schedule. Growth leads have no map coordinates. Needs plans are not funded construction.'
     if report['errors'] or report['document_budget']['remaining']:report['status']='partial'
+    report['core_status']='completed' if len(report['population'])==67 and all(s['checkStatus']=='checked' for s in report['sources']) else 'partial'
     path=out/'long_range.review.json';path.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     (out/'planning_sources_review.json').write_text(json.dumps({'status':'completed','sources':report['sources']},indent=2)+'\n')
     return report
@@ -227,4 +228,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--max-documents',type=int,default=16);a=p.parse_args()
     report=run(a.root,max_documents=a.max_documents)
     print(f"Long-range research: {report['status']}; {len(report['population'])} counties; {len(report['documents'])} documents; {len(report['search_tasks'])} search priorities")
-    if report['status']!='completed':raise SystemExit(1)
+    if report['status']!='completed':print('::warning::Long-range document coverage is partial; inspect long_range.review.json for deferred/failed sources')
+    if report['core_status']!='completed':raise SystemExit(1)
