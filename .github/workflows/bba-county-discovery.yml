@@ -1,0 +1,51 @@
+name: BBA County Discovery
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 10 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: county-discovery-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        county: [FL-12109, FL-12035]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Test county discovery
+        run: python -m unittest discover -s scripts -p 'test_bba_county_discovery.py'
+      - name: Restore historical rotation
+        uses: actions/cache/restore@v4
+        with:
+          path: research-state
+          key: county-history-v1-${{ matrix.county }}-${{ github.run_id }}
+          restore-keys: county-history-v1-${{ matrix.county }}-
+      - name: Discover public records and corroborating leads
+        run: python scripts/bba_county_discovery.py --county '${{ matrix.county }}'
+      - name: Preserve historical rotation
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: research-state
+          key: county-history-v1-${{ matrix.county }}-${{ github.run_id }}
+      - name: Preserve published feed
+        if: always()
+        run: git diff --exit-code -- projects.json
+      - name: Upload county review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: county-discovery-${{ matrix.county }}
+          path: research-output/county-discovery/*.json
+          retention-days: 30
+          if-no-files-found: error
