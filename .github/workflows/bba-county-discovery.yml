@@ -83,6 +83,10 @@ jobs:
           git add -- feeds/beta.json feeds/latest-publication.json feeds/history
           if ! git diff --cached --quiet; then
             git commit -m "Refresh validated BBA beta feed and preserve history"
+            # Preserve unrelated commits made while discovery was running.
+            # A real feed conflict fails closed; never force-push or reset main.
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
       - name: Upload publication diagnostics
