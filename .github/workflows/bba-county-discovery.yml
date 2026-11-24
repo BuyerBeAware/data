@@ -49,3 +49,47 @@ jobs:
           path: research-output/county-discovery/*.json
           retention-days: 30
           if-no-files-found: error
+
+  publish:
+    needs: discover
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Test publication and regression gates
+        run: python -m unittest discover -s scripts -p 'test_*.py'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: county-discovery-*
+          path: research-output/county-discovery
+          merge-multiple: true
+      - name: Build complete validated beta feed
+        run: python scripts/bba_publish_feed.py
+      - name: Preserve production feed
+        run: git diff --exit-code -- projects.json
+      - name: Commit versioned feed and history
+        run: |
+          git config user.name 'BBA Feed Automation'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- feeds/beta.json feeds/latest-publication.json feeds/history
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh validated BBA beta feed and preserve history"
+            git push origin HEAD:main
+          fi
+      - name: Upload publication diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beta-feed-publication
+          path: feeds/latest-publication.json
+          if-no-files-found: warn
+          retention-days: 30
