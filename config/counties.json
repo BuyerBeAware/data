@@ -177,6 +177,88 @@
         "site:fdot.gov project",
         "site:federalregister.gov highway"
       ]
+    },
+    {
+      "id": "FL-12019",
+      "state": "FL",
+      "name": "Clay County",
+      "geoid": "12019",
+      "gis": [
+        {
+          "id": "clay-zoning-ordinances",
+          "authority": "Clay County GIS",
+          "url": "https://maps.claycountygov.com/server/rest/services/EnerGov_CSS_Dev_Map/MapServer/26",
+          "trust_url": "https://maps.claycountygov.com/portal/home/item.html?id=17e1d371af504aa2a9f30ed3d95138a6",
+          "map_url": "https://maps.claycountygov.com/portal/apps/mapviewer/index.html?webmap=196f11c3d78341e2bb18c3db36c4c552",
+          "oid": "OBJECTID",
+          "identity": "SOURCE",
+          "name": "SOURCE",
+          "description": "AMMENDED",
+          "status": "StatusNotProvided",
+          "link": "NoLink",
+          "fields": [
+            "OBJECTID",
+            "SOURCE",
+            "AMMENDED",
+            "ORDINANCE_2"
+          ],
+          "where": "SOURCE IS NOT NULL AND (SOURCE LIKE 'PUD %' OR SOURCE LIKE 'ZON %' OR SOURCE LIKE 'COMP %') AND (ORDINANCE_2 LIKE '{year}-%' OR ORDINANCE_2 LIKE '{previous_year}-%' OR ORDINANCE_2 LIKE '{two_years_ago}-%')"
+        },
+        {
+          "id": "clay-bonded-roads",
+          "authority": "Clay County Bonded Transportation Program / WGI public dashboard",
+          "url": "https://services9.arcgis.com/pH6fw9gU2oojPvt8/arcgis/rest/services/Clay_County_Bonding_Projects_GIS_Viewer_WFL1/FeatureServer/3",
+          "trust_url": "https://www.claycountygov.com/government/bonded-transportation-program",
+          "map_url": "https://experience.arcgis.com/experience/95646f1556894445ac181d042999fa41/",
+          "oid": "FID",
+          "identity": "ProjectNo",
+          "name": "Project_Name",
+          "description": "Project",
+          "status": "StatusNotProvided",
+          "link": "NoLink",
+          "fields": [
+            "FID",
+            "Id",
+            "Project",
+            "ProjectNo",
+            "Project_Name"
+          ]
+        }
+      ],
+      "official_pages": [
+        "https://www.claycountygov.com/government/planning-and-zoning/planning",
+        "https://www.claycountygov.com/government/bonded-transportation-program",
+        "https://www.claycountygov.com/government/office-of-budget-management/approved-cip",
+        "https://clayutility.org/development/",
+        "https://nflroads.com/FirstCoastExpressway.aspx"
+      ],
+      "queries": [
+        "Clay County Florida rezoning PUD development site plan",
+        "Clay County Florida road CR 218 CR 220 First Coast Expressway Shands Bridge",
+        "Clay County Florida land clearing grading permit commercial development",
+        "Clay County Florida capital improvement utility fire station"
+      ],
+      "agency_queries": [
+        "site:sjrwmd.com Clay permit",
+        "site:floridadep.gov Clay permit",
+        "site:fdot.gov Clay project",
+        "site:federalregister.gov Clay highway"
+      ],
+      "news_domains": [
+        "claytodayonline.com",
+        "jaxtoday.org",
+        "news4jax.com",
+        "firstcoastnews.com",
+        "jaxdailyrecord.com"
+      ],
+      "coverage_gaps": [
+        "Public portal search POST currently returns HTTP 403; pending applications not in GIS are not fully covered",
+        "Zoning source is ordinance records for current/prior two calendar years, not all pending development applications",
+        "County website context pages can return 403; official GIS remains accessible",
+        "Municipal planning/building portals (Orange Park, Green Cove Springs, Keystone Heights, Penney Farms) not fully integrated",
+        "Bonded road geometry locates project alignments; physical work status and dates remain unverified",
+        "Private community groups and full historical clearing/building permits not covered"
+      ]
     }
   ]
 }
