@@ -5,6 +5,7 @@ No guessed coordinates or production feed writes. Requires beautifulsoup4.
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import json
+import hashlib
 from pathlib import Path
 import re
 from urllib.parse import parse_qs, urlencode, urljoin, urlsplit
@@ -168,6 +169,11 @@ def parse_detail(html,listing):
         about='Description not provided by the official project page.'
     if listing.get('listing_county') and county_keys(county)!=county_keys(listing['listing_county']):
         raise SourceError('List and detail county disagree')
+    linked_maps=[]
+    for a in s.select('#overview a[href]'):
+        href=urljoin(url,a['href']);parts=urlsplit(href)
+        if parts.scheme=='https' and (parts.hostname=='experience.arcgis.com' or (parts.hostname or '').endswith('.maps.arcgis.com')) and parts.username is None and parts.password is None and parts.port in (None,443):
+            if href not in linked_maps:linked_maps.append(href)
     docs={}
     if documents_node:
         for a in documents_node.select('a[href]'):
@@ -184,8 +190,9 @@ def parse_detail(html,listing):
             'phase':phase,'status':status,
             'is_st_johns_county':'stjohns' in county_names,
             'description':about[:12000], 'description_status':description_status, 'schedule':{'start':start,'completion':finish},
+            'schedule_source_fields':{'start':'Project Start' if is_nfl else 'Construction Start','completion':'Expected Completion' if is_nfl else 'Construction End' if fields.get('Construction End') else 'Est. Completion'},
             'funding_status':'Not established; inspect linked project documents',
-            'source_last_updated':last_updated,'documents':list(docs.values()),
+            'source_last_updated':last_updated,'documents':list(docs.values()),'linked_maps':linked_maps,
             'latitude':None,'longitude':None,'geometry':None,'location_status':'needs_verified_alignment',
             'project_horizon':'Not inferred from publication, meeting or study dates',
             'publication_allowed':False,'review_only':True}
@@ -197,13 +204,14 @@ def write(path,payload):
     temp.replace(path)
 
 
-def run(root=None,client=None,max_details=250,extra_listings=None):
+def run(root=None,client=None,max_details=250,extra_listings=None,county_scope=None,snapshot_dir=None):
     root=Path(root) if root else Path(__file__).resolve().parents[1]
     output=root/'research-output';output.mkdir(parents=True,exist_ok=True)
     client=client or Client()
     report={'schema_version':1,'generated_at':datetime.now(timezone.utc).isoformat(),
             'status':'completed','publication_allowed':False,'sources':[], 'projects':[],
             'coverage':'All counties in NFLRoads active/future lists and CFLRoads US-1 future/construction lists; not all Florida districts or completed projects'}
+    if snapshot_dir:Path(snapshot_dir).mkdir(parents=True,exist_ok=True)
     listings=list(extra_listings or [])
     def error(url,exc):
         report['status']='partial'
@@ -225,6 +233,9 @@ def run(root=None,client=None,max_details=250,extra_listings=None):
             found=cfl_list(client.read(url),url);listings.extend(found)
             report['sources'].append({'url':url,'status':'completed','projects_listed':len(found)})
         except Exception as exc: error(url,exc)
+    if county_scope:
+        listings=[l for l in listings if not l.get("listing_county") or county_keys(l["listing_county"]) & set(county_scope)]
+        report["requested_counties"]=sorted(county_scope)
     by_url={}
     for listing in listings:
         url=listing['source_url']
@@ -237,7 +248,11 @@ def run(root=None,client=None,max_details=250,extra_listings=None):
     def read(url):
         try:
             primary=next((l for l in by_url[url] if l.get('listing_county')),by_url[url][0])
-            item=parse_detail(client.read(url),primary)
+            html=client.read(url)
+            item=parse_detail(html,primary)
+            item['source_checked_at']=datetime.now(timezone.utc).isoformat()
+            item['source_sha256']=hashlib.sha256(html.encode()).hexdigest()
+            if snapshot_dir:(Path(snapshot_dir)/(hashlib.sha256(url.encode()).hexdigest()[:20]+'.html')).write_text(html)
             item['discovered_in']=sorted({l['discovery_url'] for l in by_url[url]})
             item['listing_statuses']=sorted({l['listing_status'] for l in by_url[url]})
             return item,None
