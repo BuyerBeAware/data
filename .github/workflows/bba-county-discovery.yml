@@ -145,6 +145,8 @@ jobs:
           path: research-output/county-discovery
       - name: Publish three-county compatibility feed
         run: python scripts/bba_publish_clay.py
+      - name: Audit evidence gaps and prioritize exact-record enrichment
+        run: python scripts/bba_project_quality.py
       - name: Preserve existing clients and production
         run: git diff --exit-code -- projects.json feeds/beta.json
       - name: Commit v2 feed and durable history
@@ -163,6 +165,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: beta-feed-v2-publication
-          path: feeds/latest-publication-v2.json
+          path: |
+            feeds/latest-publication-v2.json
+            research-output/project-quality.json
           if-no-files-found: warn
           retention-days: 30
