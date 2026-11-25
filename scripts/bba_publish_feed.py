@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SJC = 'FL-12109'
 FLAGLER = 'FL-12035'
 BOUNDARY = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query'
-BOUNDS = {SJC: (29.3,30.4,-81.8,-81.0), FLAGLER:(29.15,29.8,-81.65,-80.95)}
+BOUNDS = {SJC: (29.3,30.4,-81.8,-81.0), FLAGLER:(29.15,29.8,-81.65,-80.95), 'FL-12019':(29.5,30.35,-82.2,-81.45)}
 
 
 def digest(value):
@@ -152,6 +152,7 @@ def run(root,artifacts):
     flagler,flagler_report=flagler_records(report,next(c for c in config if c['id']==FLAGLER),s,stamp)
     # Validate the complete candidate before touching the current feed.
     merged,changes=merge(previous,sjc+flagler)
+    if any(r.get('countyID',SJC) not in (SJC,FLAGLER) for r in merged):raise ValueError('Legacy two-county feed cannot contain Clay records')
     generated={'schemaVersion':1,'audience':'bba-beta','generatedAt':stamp,'revision':digest(merged),
         'counties':[SJC,FLAGLER],'projects':merged,
         'coverage':{'scope':'Official county/municipal project GIS areas; incomplete permit and work-date coverage. News/unlocated records remain review-only.',

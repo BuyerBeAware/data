@@ -63,7 +63,21 @@ class DiscoveryTests(unittest.TestCase):
         point=(candidate['longitude'],candidate['latitude'])
         self.assertTrue(b.inside(point,[outer,hole]));self.assertFalse(candidate['publication_eligible'])
         self.assertIsNone(b.geometry_candidate({'x':20,'y':20},[outer]))
-        self.assertIsNone(b.geometry_candidate({'paths':[[[1,1],[2,2]]]},[outer]))
+        self.assertIsNone(b.geometry_candidate({'paths':[[[11,11],[12,12]]]},[outer]))
+        candidate=b.geometry_candidate({'paths':[[[1,1],[2,2]]]},[outer])
+        self.assertEqual((candidate['longitude'],candidate['latitude']),(1.5,1.5))
+        self.assertIn('alignment',candidate['method'])
+        self.assertFalse(candidate['publication_eligible'])
+    def test_clay_window_rolls_without_changing_existing_sources(self):
+        from datetime import datetime,timezone
+        year=datetime.now(timezone.utc).year
+        self.assertEqual(b.gis_where({}),'1=1')
+        config=json.loads((Path(__file__).parents[1]/'config/counties.json').read_text())
+        clay=next(c for c in config['counties'] if c['id']=='FL-12019')
+        clause=b.gis_where(clay['gis'][0])
+        for value in (year,year-1,year-2):self.assertIn(str(value)+'-%',clause)
+        self.assertNotIn('{year}',clause)
+
     def test_multiple_features_same_application_preserved(self):
         config=json.loads((Path(__file__).parents[1]/'config/counties.json').read_text())
         county=config['counties'][1];cfg=county['gis'][0]

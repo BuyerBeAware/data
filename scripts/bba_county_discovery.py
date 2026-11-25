@@ -130,8 +130,13 @@ def enrich_register(s, row):
     row['detail_checked_at']=STAMP
 
 
+def gis_where(cfg):
+    year=datetime.now(timezone.utc).year
+    return cfg.get('where','1=1').format(year=year,previous_year=year-1,two_years_ago=year-2)
+
+
 def gis_records(s, county, cfg):
-    ids = request_json(s, cfg['url'] + '/query', {'f':'json', 'where':'1=1', 'returnIdsOnly':'true'})
+    ids = request_json(s, cfg['url'] + '/query', {'f':'json', 'where':gis_where(cfg), 'returnIdsOnly':'true'})
     if ids.get('exceededTransferLimit') or 'objectIds' not in ids:
         raise ValueError('Incomplete object ID enumeration')
     oid_list = sorted(set(ids['objectIds'] or [])); found = {}; rows = []
@@ -197,6 +202,15 @@ def geometry_candidate(geometry, county_rings):
                 if inside(p,rings) and inside(p,county_rings) and (best is None or b-a>best[0]):best=(b-a,p)
         if best is None:return None
         point=best[1];kind='interior point of official project polygon; not a building footprint'
+    elif geometry.get('paths'):
+        # A point ON a sourced alignment, never an invented corridor polygon.
+        options=[]
+        for path in geometry['paths']:
+            for a,b in zip(path,path[1:]):
+                p=((a[0]+b[0])/2,(a[1]+b[1])/2)
+                if inside(p,county_rings):options.append(((a[0]-b[0])**2+(a[1]-b[1])**2,p))
+        if not options:return None
+        point=max(options,key=lambda x:x[0])[1];kind='representative point on official public project alignment; exact work limits not verified'
     else:return None
     if not (-180<=point[0]<=180 and -90<=point[1]<=90) or not inside(point,county_rings):return None
     return {'latitude':point[1],'longitude':point[0],'method':kind,
