@@ -258,6 +258,14 @@
         "Municipal planning/building portals (Orange Park, Green Cove Springs, Keystone Heights, Penney Farms) not fully integrated",
         "Bonded road geometry locates project alignments; physical work status and dates remain unverified",
         "Private community groups and full historical clearing/building permits not covered"
+      ],
+      "project_documents": [
+        {
+          "recordID": "FL-12019:clay-zoning-ordinances:ZON 25-0038:3154",
+          "caseID": "ZON 25-0038",
+          "url": "https://claycounty.novusagenda.com/agendapublic/AttachmentViewer.ashx?AttachmentID=36415&ItemID=16472",
+          "kind": "staff_report"
+        }
       ]
     }
   ]
