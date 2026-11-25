@@ -1,0 +1,54 @@
+name: BBA Road Evidence
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 11 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: road-evidence-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Test identity, date and map evidence rules
+        run: python -m unittest discover -s scripts -p 'test_*.py'
+      - name: Refresh official three-county road evidence
+        run: python scripts/bba_road_evidence.py --refresh --inspect-maps --out feeds/road-evidence.review.json
+      - name: Preserve existing pin feeds
+        run: git diff --exit-code -- projects.json feeds/beta.json feeds/beta-v2.json
+      - name: Publish review evidence only
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name 'BBA Evidence Automation'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- feeds/road-evidence.review.json feeds/road-evidence.review.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh source-specific road evidence for review"
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Upload evidence and source coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bba-road-evidence
+          path: |
+            feeds/road-evidence.review.json
+            feeds/road-evidence.review.md
+            research-output/road-source-pages/*.html
+            research-output/road_projects.review.json
+          if-no-files-found: warn
+          retention-days: 30
