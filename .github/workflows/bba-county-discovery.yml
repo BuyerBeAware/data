@@ -97,3 +97,72 @@ jobs:
           path: feeds/latest-publication.json
           if-no-files-found: warn
           retention-days: 30
+
+  discover-clay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Discover Clay official GIS and public leads
+        run: python scripts/bba_county_discovery.py --county FL-12019
+      - name: Preserve production and existing beta feed
+        if: always()
+        run: git diff --exit-code -- projects.json feeds/beta.json
+      - name: Upload Clay review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: county-discovery-FL-12019
+          path: research-output/county-discovery/*.json
+          retention-days: 30
+          if-no-files-found: error
+
+  publish-clay:
+    needs: [publish, discover-clay]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Test Clay and legacy compatibility
+        run: python -m unittest discover -s scripts -p 'test_*.py'
+      - uses: actions/download-artifact@v4
+        with:
+          name: county-discovery-FL-12019
+          path: research-output/county-discovery
+      - name: Publish three-county compatibility feed
+        run: python scripts/bba_publish_clay.py
+      - name: Preserve existing clients and production
+        run: git diff --exit-code -- projects.json feeds/beta.json
+      - name: Commit v2 feed and durable history
+        run: |
+          git config user.name 'BBA Feed Automation'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- feeds/beta-v2.json feeds/latest-publication-v2.json feeds/history-v2
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh validated three-county beta feed"
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Upload v2 publication diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beta-feed-v2-publication
+          path: feeds/latest-publication-v2.json
+          if-no-files-found: warn
+          retention-days: 30
