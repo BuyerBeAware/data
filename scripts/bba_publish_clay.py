@@ -9,6 +9,7 @@ from urllib.parse import urlencode
 import bba_publish_feed as core
 from bba_county_discovery import session,geometry_candidate
 from bba_location_correlation import constraints
+from bba_clay_enrichment import enrich
 
 ROOT=Path(__file__).resolve().parents[1]
 CLAY='FL-12019'
@@ -59,6 +60,11 @@ def run(root,artifacts):
     county=next(c for c in json.loads((root/'config/counties.json').read_text())['counties'] if c['id']==CLAY)
     report=json.loads((artifacts/(CLAY+'.review.json')).read_text())
     incoming,diagnostics=clay_records(report,county,session(),stamp)
+    # Enrich exact identities from official documents and exact parcels before publication.
+    for document in county.get('project_documents',[]):
+        matches=[i for i,r in enumerate(incoming) if r['projectId']==document['recordID']]
+        if len(matches)!=1:raise ValueError('Configured document identity not in current snapshot')
+        incoming[matches[0]]=enrich(incoming[matches[0]],document,session(),stamp)
     merged,changes=core.merge(baseline,incoming)
     output={'schemaVersion':1,'audience':'bba-beta','generatedAt':stamp,'revision':core.digest(merged),
         'counties':[core.SJC,core.FLAGLER,CLAY],'projects':merged,

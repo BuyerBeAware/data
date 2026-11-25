@@ -10,6 +10,7 @@ import bba_publish_clay as b
 class ClayTests(unittest.TestCase):
     def setUp(self):
         self.county=next(c for c in json.loads((b.ROOT/'config/counties.json').read_text())['counties'] if c['id']==b.CLAY)
+        self.county.pop('project_documents',None) # Publication fixture has no registered document.
         self.cfg=self.county['gis'][0]
         self.stamp=datetime.now(timezone.utc).isoformat()
         self.row={'id':'clay:test:1','title':'PUD 26-0007','record_number':'PUD 26-0007','record_type':self.cfg['id'],
