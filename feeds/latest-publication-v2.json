@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-11-25T20:57:12.122833+00:00",
+  "count": 873,
+  "revision": "df834f6f532a6b5dccf883ddd499eb17bae8b79a16ec5a242f3e475c99a287c4",
+  "changes": {
+    "added": 65,
+    "updated": 0,
+    "retained": 808,
+    "withheld": []
+  },
+  "legacyMerge": {
+    "added": 0,
+    "updated": 0,
+    "retained": 808,
+    "withheld": []
+  },
+  "clay": {
+    "accepted": 65,
+    "withheld": [],
+    "scope": "Current/prior two ordinance years plus public bonded road project alignments; not full permit/pending case coverage"
+  }
+}
