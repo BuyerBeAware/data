@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-25T22:21:08.762936+00:00",
+  "generatedAt": "2026-11-26T20:19:49.048169+00:00",
   "records": [
     {
       "recordID": "fdot-446808-2",
       "title": "Blanding Boulevard (State Road 21) Intersection Improvements from South of Wells Road to the Ortega River",
       "counties": "Clay, Duval",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5580",
-      "sourceCheckedAt": "2026-11-25T22:21:04.754245+00:00",
-      "sourceSHA256": "e7c172967f29a52672c535c72de51958cd1956fbcd62ffd3892c27dfa48e430d",
+      "sourceCheckedAt": "2026-11-26T20:19:45.552441+00:00",
+      "sourceSHA256": "3f3f3a735c65bd602c443ed6025b275f5eb8f68a0669a13c8f7c5e9f78ba1f9e",
       "sourceProjectNumber": "446808-2",
       "financialProjectIDs": [
         "446808-2"
@@ -27,8 +27,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5580",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:04.754245+00:00",
-          "sourceSHA256": "e7c172967f29a52672c535c72de51958cd1956fbcd62ffd3892c27dfa48e430d"
+          "sourceCheckedAt": "2026-11-26T20:19:45.552441+00:00",
+          "sourceSHA256": "3f3f3a735c65bd602c443ed6025b275f5eb8f68a0669a13c8f7c5e9f78ba1f9e"
         },
         {
           "event": "project_expected_completion",
@@ -42,8 +42,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5580",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:04.754245+00:00",
-          "sourceSHA256": "e7c172967f29a52672c535c72de51958cd1956fbcd62ffd3892c27dfa48e430d"
+          "sourceCheckedAt": "2026-11-26T20:19:45.552441+00:00",
+          "sourceSHA256": "3f3f3a735c65bd602c443ed6025b275f5eb8f68a0669a13c8f7c5e9f78ba1f9e"
         }
       ],
       "sourceSchedule": {
@@ -66,8 +66,8 @@
       "title": "First Coast Expressway \u2013 East of CR 2209 to East of CR 16A",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5605",
-      "sourceCheckedAt": "2026-11-25T22:21:04.766336+00:00",
-      "sourceSHA256": "e03bd0ff895062a263f69c39a52f178e7c089de7150628f515ab15a711a44918",
+      "sourceCheckedAt": "2026-11-26T20:19:45.594647+00:00",
+      "sourceSHA256": "a799ab336dcf104d02367ae139680896e4a57fb8b8e21aa5b45863ebeb91b68e",
       "sourceProjectNumber": "422938-8",
       "financialProjectIDs": [
         "422938-8"
@@ -86,8 +86,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5605",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:04.766336+00:00",
-          "sourceSHA256": "e03bd0ff895062a263f69c39a52f178e7c089de7150628f515ab15a711a44918"
+          "sourceCheckedAt": "2026-11-26T20:19:45.594647+00:00",
+          "sourceSHA256": "a799ab336dcf104d02367ae139680896e4a57fb8b8e21aa5b45863ebeb91b68e"
         },
         {
           "event": "project_expected_completion",
@@ -101,8 +101,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5605",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:04.766336+00:00",
-          "sourceSHA256": "e03bd0ff895062a263f69c39a52f178e7c089de7150628f515ab15a711a44918"
+          "sourceCheckedAt": "2026-11-26T20:19:45.594647+00:00",
+          "sourceSHA256": "a799ab336dcf104d02367ae139680896e4a57fb8b8e21aa5b45863ebeb91b68e"
         }
       ],
       "sourceSchedule": {
@@ -140,8 +140,8 @@
       "title": "First Coast Expressway \u2013 I-95 to East of CR 2209",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5639",
-      "sourceCheckedAt": "2026-11-25T22:21:04.741233+00:00",
-      "sourceSHA256": "48590809a55e0c584bc3439ca590afe84f0480995b90dd3072fd466235012f0f",
+      "sourceCheckedAt": "2026-11-26T20:19:45.491880+00:00",
+      "sourceSHA256": "9cd710725aed6827b0cc43c81780fb35f3dd9e52bc232c83a92335f632132f94",
       "sourceProjectNumber": "4530701",
       "financialProjectIDs": [
         "453070-1"
@@ -160,8 +160,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5639",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:04.741233+00:00",
-          "sourceSHA256": "48590809a55e0c584bc3439ca590afe84f0480995b90dd3072fd466235012f0f"
+          "sourceCheckedAt": "2026-11-26T20:19:45.491880+00:00",
+          "sourceSHA256": "9cd710725aed6827b0cc43c81780fb35f3dd9e52bc232c83a92335f632132f94"
         },
         {
           "event": "project_expected_completion",
@@ -176,8 +176,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5639",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:04.741233+00:00",
-          "sourceSHA256": "48590809a55e0c584bc3439ca590afe84f0480995b90dd3072fd466235012f0f"
+          "sourceCheckedAt": "2026-11-26T20:19:45.491880+00:00",
+          "sourceSHA256": "9cd710725aed6827b0cc43c81780fb35f3dd9e52bc232c83a92335f632132f94"
         }
       ],
       "sourceSchedule": {
@@ -217,8 +217,8 @@
       "title": "First Coast Expressway \u2013 New St. Johns River Bridge",
       "counties": "Clay, St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5136",
-      "sourceCheckedAt": "2026-11-25T22:21:04.709710+00:00",
-      "sourceSHA256": "61c096163566359b531d33efb504ae0b5fa30b86460040992500b4c7d890eb12",
+      "sourceCheckedAt": "2026-11-26T20:19:45.585964+00:00",
+      "sourceSHA256": "4074b58dfde94c573ed30318594ac9349c1b6451af9406958c00d3a7abf905df",
       "sourceProjectNumber": "422938-7",
       "financialProjectIDs": [
         "422938-7"
@@ -237,8 +237,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5136",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:04.709710+00:00",
-          "sourceSHA256": "61c096163566359b531d33efb504ae0b5fa30b86460040992500b4c7d890eb12"
+          "sourceCheckedAt": "2026-11-26T20:19:45.585964+00:00",
+          "sourceSHA256": "4074b58dfde94c573ed30318594ac9349c1b6451af9406958c00d3a7abf905df"
         },
         {
           "event": "project_expected_completion",
@@ -252,8 +252,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5136",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:04.709710+00:00",
-          "sourceSHA256": "61c096163566359b531d33efb504ae0b5fa30b86460040992500b4c7d890eb12"
+          "sourceCheckedAt": "2026-11-26T20:19:45.585964+00:00",
+          "sourceSHA256": "4074b58dfde94c573ed30318594ac9349c1b6451af9406958c00d3a7abf905df"
         }
       ],
       "sourceSchedule": {
@@ -291,8 +291,8 @@
       "title": "I-295 at U.S. 17 Interchange Improvements",
       "counties": "Clay, Duval",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5064",
-      "sourceCheckedAt": "2026-11-25T22:21:04.962159+00:00",
-      "sourceSHA256": "362b2a73d8a1f03dbe28ef6137adefc9dc333772691783f46cc8a519dc959150",
+      "sourceCheckedAt": "2026-11-26T20:19:45.776031+00:00",
+      "sourceSHA256": "3d6c2483ad6bd2d11736cbbda98b27d8502307ce94117e9e8b204dbc08d0d0c4",
       "sourceProjectNumber": "4355751",
       "financialProjectIDs": [
         "435575-1"
@@ -311,8 +311,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5064",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:04.962159+00:00",
-          "sourceSHA256": "362b2a73d8a1f03dbe28ef6137adefc9dc333772691783f46cc8a519dc959150"
+          "sourceCheckedAt": "2026-11-26T20:19:45.776031+00:00",
+          "sourceSHA256": "3d6c2483ad6bd2d11736cbbda98b27d8502307ce94117e9e8b204dbc08d0d0c4"
         },
         {
           "event": "project_expected_completion",
@@ -326,8 +326,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5064",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:04.962159+00:00",
-          "sourceSHA256": "362b2a73d8a1f03dbe28ef6137adefc9dc333772691783f46cc8a519dc959150"
+          "sourceCheckedAt": "2026-11-26T20:19:45.776031+00:00",
+          "sourceSHA256": "3d6c2483ad6bd2d11736cbbda98b27d8502307ce94117e9e8b204dbc08d0d0c4"
         }
       ],
       "sourceSchedule": {
@@ -350,8 +350,8 @@
       "title": "King Street Bridge over San Sebastian River Rehabilitation",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5461",
-      "sourceCheckedAt": "2026-11-25T22:21:05.017070+00:00",
-      "sourceSHA256": "32c6ab7a60bea106b96d4764d2db3aaf464e597dcfbc533064a851e481625410",
+      "sourceCheckedAt": "2026-11-26T20:19:45.813943+00:00",
+      "sourceSHA256": "b531a515461c622082c4df85e53c40f6860673ace7fece0f915ec73e27369338",
       "sourceProjectNumber": "437428-1",
       "financialProjectIDs": [
         "437428-1"
@@ -370,8 +370,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5461",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:05.017070+00:00",
-          "sourceSHA256": "32c6ab7a60bea106b96d4764d2db3aaf464e597dcfbc533064a851e481625410"
+          "sourceCheckedAt": "2026-11-26T20:19:45.813943+00:00",
+          "sourceSHA256": "b531a515461c622082c4df85e53c40f6860673ace7fece0f915ec73e27369338"
         },
         {
           "event": "project_expected_completion",
@@ -385,8 +385,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5461",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:05.017070+00:00",
-          "sourceSHA256": "32c6ab7a60bea106b96d4764d2db3aaf464e597dcfbc533064a851e481625410"
+          "sourceCheckedAt": "2026-11-26T20:19:45.813943+00:00",
+          "sourceSHA256": "b531a515461c622082c4df85e53c40f6860673ace7fece0f915ec73e27369338"
         }
       ],
       "sourceSchedule": {
@@ -409,8 +409,8 @@
       "title": "Park Avenue (U.S. 17) from Doctors Inlet to Wells Road resurfacing",
       "counties": "Clay",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6101",
-      "sourceCheckedAt": "2026-11-25T22:21:05.003113+00:00",
-      "sourceSHA256": "e51ff0a2c3bc3cf74ac3fa50c8e96c82415b0a4b8c1f6e9eb0c3f921046da4a5",
+      "sourceCheckedAt": "2026-11-26T20:19:45.805386+00:00",
+      "sourceSHA256": "4575ead45f0ff2bb6a0070a2047f2f0cebb5968707b8e222d5e6c37541094d59",
       "sourceProjectNumber": "208228-3",
       "financialProjectIDs": [
         "208228-3"
@@ -429,8 +429,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6101",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:05.003113+00:00",
-          "sourceSHA256": "e51ff0a2c3bc3cf74ac3fa50c8e96c82415b0a4b8c1f6e9eb0c3f921046da4a5"
+          "sourceCheckedAt": "2026-11-26T20:19:45.805386+00:00",
+          "sourceSHA256": "4575ead45f0ff2bb6a0070a2047f2f0cebb5968707b8e222d5e6c37541094d59"
         },
         {
           "event": "project_expected_completion",
@@ -444,8 +444,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6101",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:05.003113+00:00",
-          "sourceSHA256": "e51ff0a2c3bc3cf74ac3fa50c8e96c82415b0a4b8c1f6e9eb0c3f921046da4a5"
+          "sourceCheckedAt": "2026-11-26T20:19:45.805386+00:00",
+          "sourceSHA256": "4575ead45f0ff2bb6a0070a2047f2f0cebb5968707b8e222d5e6c37541094d59"
         }
       ],
       "sourceSchedule": {
@@ -468,8 +468,8 @@
       "title": "State Road 16 from State Road 21 to U.S. 17 resurfacing",
       "counties": "Clay",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5883",
-      "sourceCheckedAt": "2026-11-25T22:21:04.993108+00:00",
-      "sourceSHA256": "c49b35520bdedf714d333ff9a71c2d3f4fcfd34752f919c25984a88cc000a260",
+      "sourceCheckedAt": "2026-11-26T20:19:45.797321+00:00",
+      "sourceSHA256": "20697e47385c444d390a77f1e0869d9f030c168aebc65cded062414684d99d17",
       "sourceProjectNumber": "208200-5",
       "financialProjectIDs": [
         "208200-5"
@@ -488,8 +488,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5883",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:04.993108+00:00",
-          "sourceSHA256": "c49b35520bdedf714d333ff9a71c2d3f4fcfd34752f919c25984a88cc000a260"
+          "sourceCheckedAt": "2026-11-26T20:19:45.797321+00:00",
+          "sourceSHA256": "20697e47385c444d390a77f1e0869d9f030c168aebc65cded062414684d99d17"
         },
         {
           "event": "project_expected_completion",
@@ -503,8 +503,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5883",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:04.993108+00:00",
-          "sourceSHA256": "c49b35520bdedf714d333ff9a71c2d3f4fcfd34752f919c25984a88cc000a260"
+          "sourceCheckedAt": "2026-11-26T20:19:45.797321+00:00",
+          "sourceSHA256": "20697e47385c444d390a77f1e0869d9f030c168aebc65cded062414684d99d17"
         }
       ],
       "sourceSchedule": {
@@ -527,8 +527,8 @@
       "title": "State Road A1A from Bridge of Lions to Charlotte Street Seawall Replacement",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5612",
-      "sourceCheckedAt": "2026-11-25T22:21:05.277859+00:00",
-      "sourceSHA256": "c3d3f6f0a49944f0a85cefd313c05adacde42c44975b1738e1c967307f08cc63",
+      "sourceCheckedAt": "2026-11-26T20:19:45.990275+00:00",
+      "sourceSHA256": "18d3f71333790dcb10d1ac8a2188fe92ceb2e508c248c491179da9b48110d02a",
       "sourceProjectNumber": "428271-2",
       "financialProjectIDs": [
         "428271-2"
@@ -547,8 +547,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5612",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:05.277859+00:00",
-          "sourceSHA256": "c3d3f6f0a49944f0a85cefd313c05adacde42c44975b1738e1c967307f08cc63"
+          "sourceCheckedAt": "2026-11-26T20:19:45.990275+00:00",
+          "sourceSHA256": "18d3f71333790dcb10d1ac8a2188fe92ceb2e508c248c491179da9b48110d02a"
         },
         {
           "event": "project_expected_completion",
@@ -562,8 +562,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5612",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:05.277859+00:00",
-          "sourceSHA256": "c3d3f6f0a49944f0a85cefd313c05adacde42c44975b1738e1c967307f08cc63"
+          "sourceCheckedAt": "2026-11-26T20:19:45.990275+00:00",
+          "sourceSHA256": "18d3f71333790dcb10d1ac8a2188fe92ceb2e508c248c491179da9b48110d02a"
         }
       ],
       "sourceSchedule": {
@@ -586,8 +586,8 @@
       "title": "State Road A1A Pedestrian Safety Improvements",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5621",
-      "sourceCheckedAt": "2026-11-25T22:21:05.255268+00:00",
-      "sourceSHA256": "03800b535ba727f53a0c97cf1b6789961b62afab87f4caff6dafa4e48f358577",
+      "sourceCheckedAt": "2026-11-26T20:19:46.055449+00:00",
+      "sourceSHA256": "792ddc031b6654e83aa9e94329e8aecb47144cc3004e0af69c7dd091573c2f06",
       "sourceProjectNumber": "409311-6-52-01",
       "financialProjectIDs": [
         "409311-6-52-01"
@@ -606,8 +606,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5621",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:05.255268+00:00",
-          "sourceSHA256": "03800b535ba727f53a0c97cf1b6789961b62afab87f4caff6dafa4e48f358577"
+          "sourceCheckedAt": "2026-11-26T20:19:46.055449+00:00",
+          "sourceSHA256": "792ddc031b6654e83aa9e94329e8aecb47144cc3004e0af69c7dd091573c2f06"
         },
         {
           "event": "project_expected_completion",
@@ -621,8 +621,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5621",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:05.255268+00:00",
-          "sourceSHA256": "03800b535ba727f53a0c97cf1b6789961b62afab87f4caff6dafa4e48f358577"
+          "sourceCheckedAt": "2026-11-26T20:19:46.055449+00:00",
+          "sourceSHA256": "792ddc031b6654e83aa9e94329e8aecb47144cc3004e0af69c7dd091573c2f06"
         }
       ],
       "sourceSchedule": {
@@ -645,8 +645,8 @@
       "title": "U.S. 17 (State Road 15) from Oak Street to Black Creek Roadway Improvements",
       "counties": "Clay",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5591",
-      "sourceCheckedAt": "2026-11-25T22:21:05.263987+00:00",
-      "sourceSHA256": "7bad03c5b0b949d59ff1195242b26e20654b95a86bce2b0e4e65620f850c36a3",
+      "sourceCheckedAt": "2026-11-26T20:19:46.091801+00:00",
+      "sourceSHA256": "5c923b50a710473b76ebe67aea22f287c81f3cc2b247c76e93d1c29660e3955c",
       "sourceProjectNumber": "208202-5",
       "financialProjectIDs": [
         "208202-5"
@@ -665,8 +665,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5591",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:05.263987+00:00",
-          "sourceSHA256": "7bad03c5b0b949d59ff1195242b26e20654b95a86bce2b0e4e65620f850c36a3"
+          "sourceCheckedAt": "2026-11-26T20:19:46.091801+00:00",
+          "sourceSHA256": "5c923b50a710473b76ebe67aea22f287c81f3cc2b247c76e93d1c29660e3955c"
         },
         {
           "event": "project_expected_completion",
@@ -680,8 +680,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5591",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:05.263987+00:00",
-          "sourceSHA256": "7bad03c5b0b949d59ff1195242b26e20654b95a86bce2b0e4e65620f850c36a3"
+          "sourceCheckedAt": "2026-11-26T20:19:46.091801+00:00",
+          "sourceSHA256": "5c923b50a710473b76ebe67aea22f287c81f3cc2b247c76e93d1c29660e3955c"
         }
       ],
       "sourceSchedule": {
@@ -704,8 +704,8 @@
       "title": "Blanding Boulevard (State Road 21) at Henley Road Proposed Access Changes",
       "counties": "Clay",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6114",
-      "sourceCheckedAt": "2026-11-25T22:21:05.236950+00:00",
-      "sourceSHA256": "6668497c22088d41eadae95e4bdaa92e937230ab3fcbdbaea8aea7a3a298f428",
+      "sourceCheckedAt": "2026-11-26T20:19:46.047582+00:00",
+      "sourceSHA256": "1b2bb7a7262223279aee61938dc120f2d4b5103cfaac5985c6af353b909ac9e7",
       "sourceProjectNumber": null,
       "financialProjectIDs": [],
       "sourcePhase": "Not provided",
@@ -730,8 +730,8 @@
       "title": "Blanding Boulevard south of Knight Boxx Road median modification",
       "counties": "Clay",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5597",
-      "sourceCheckedAt": "2026-11-25T22:21:05.512088+00:00",
-      "sourceSHA256": "90db8a10c892d7e87939bc1b10878384e5cd52adbe994db09bc4b67e7d1d888f",
+      "sourceCheckedAt": "2026-11-26T20:19:46.251299+00:00",
+      "sourceSHA256": "27d67ff2d86015d20e044a54c94e72d2d8ea4b2bdbc5076e2321821f33213252",
       "sourceProjectNumber": null,
       "financialProjectIDs": [],
       "sourcePhase": "Not provided",
@@ -756,8 +756,8 @@
       "title": "Coastal Highway from SR A1A to 24th Street drainage improvements & shared use path construction",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5690",
-      "sourceCheckedAt": "2026-11-25T22:21:05.547607+00:00",
-      "sourceSHA256": "c18ba3c267b0aed139e6e793024763233dbec4ea4a566ce1bc55b01eea248785",
+      "sourceCheckedAt": "2026-11-26T20:19:46.290721+00:00",
+      "sourceSHA256": "9770abf61a7aa483bded48cfec5d5bdb1536069815640c5192ae9dacb38a5254",
       "sourceProjectNumber": "429931-1, 429931-2",
       "financialProjectIDs": [
         "429931-1",
@@ -777,8 +777,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5690",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:05.547607+00:00",
-          "sourceSHA256": "c18ba3c267b0aed139e6e793024763233dbec4ea4a566ce1bc55b01eea248785"
+          "sourceCheckedAt": "2026-11-26T20:19:46.290721+00:00",
+          "sourceSHA256": "9770abf61a7aa483bded48cfec5d5bdb1536069815640c5192ae9dacb38a5254"
         }
       ],
       "sourceSchedule": {
@@ -803,8 +803,8 @@
       "title": "County Road 220 PD&E Study",
       "counties": "Clay",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5185",
-      "sourceCheckedAt": "2026-11-25T22:21:05.561670+00:00",
-      "sourceSHA256": "52b561c5dffe9eb67f3c9f841c411210a7be11d0872fb09a879882e3b1efa2e1",
+      "sourceCheckedAt": "2026-11-26T20:19:46.281823+00:00",
+      "sourceSHA256": "b88c9d4f3af7e7b088986ca9820cc4a0dadf410633bc2e1b91b7d26a4c229327",
       "sourceProjectNumber": "430719-2",
       "financialProjectIDs": [
         "430719-2"
@@ -831,8 +831,8 @@
       "title": "CR 210 at CR 2209 (St. Johns Parkway) Intersection Access Management Improvements",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6090",
-      "sourceCheckedAt": "2026-11-25T22:21:05.536055+00:00",
-      "sourceSHA256": "69e6b7631c8d1111673e86daf0a15ff05104f5612f475f493f20fc39bf0acadb",
+      "sourceCheckedAt": "2026-11-26T20:19:46.301778+00:00",
+      "sourceSHA256": "ec908f9261d4aaae49378cb2bb2119ffeca2d59baaedaad09a5ef0ea2b822e13",
       "sourceProjectNumber": "441371-1",
       "financialProjectIDs": [
         "441371-1"
@@ -859,8 +859,8 @@
       "title": "S.R. A1A Trail from Pope Road to Red Cox Drive",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5672",
-      "sourceCheckedAt": "2026-11-25T22:21:05.793437+00:00",
-      "sourceSHA256": "4670db6fd1067500a88fd3b22ff781e31c011d9c6749e5b9b7f3fd7102fdc32b",
+      "sourceCheckedAt": "2026-11-26T20:19:46.524084+00:00",
+      "sourceSHA256": "92244d79e711a4b84b3aff86c61f423f763ef2ebaab08cc5a041a57763f3cdfb",
       "sourceProjectNumber": "447060-1",
       "financialProjectIDs": [
         "447060-1"
@@ -887,8 +887,8 @@
       "title": "SR 16 from IGP to I-95 PDE Study",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5615",
-      "sourceCheckedAt": "2026-11-25T22:21:05.832294+00:00",
-      "sourceSHA256": "7252f3b3bc78721afb3a272553d0a0f6e068b43cf4b828455c4a4dd8fdfc0e5d",
+      "sourceCheckedAt": "2026-11-26T20:19:46.563309+00:00",
+      "sourceSHA256": "c4521b068a8a3e484ab608e831f9940a597d323ceb6695729cbad9fc3b1a2f7e",
       "sourceProjectNumber": "210447-5-32-01",
       "financialProjectIDs": [
         "210447-5-32-01"
@@ -915,8 +915,8 @@
       "title": "SR A1A Trail",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5601",
-      "sourceCheckedAt": "2026-11-25T22:21:05.998045+00:00",
-      "sourceSHA256": "ea3605013b494335a64215e39dd4d52c7c09e136e52381726fc51b4cb99f564d",
+      "sourceCheckedAt": "2026-11-26T20:19:46.700017+00:00",
+      "sourceSHA256": "3ae77672961bae0e630bf322e46b925d15598bc90e5dcccea850005da351ce14",
       "sourceProjectNumber": "447736-1",
       "financialProjectIDs": [
         "447736-1"
@@ -943,8 +943,8 @@
       "title": "State Road 16 at Green Acres Road Proposed Median Modification",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6128",
-      "sourceCheckedAt": "2026-11-25T22:21:06.023698+00:00",
-      "sourceSHA256": "6e1c41e256c4252842a882f5cb159b9f9f31baf9732eab956fc0a3f3c80f1d32",
+      "sourceCheckedAt": "2026-11-26T20:19:46.772704+00:00",
+      "sourceSHA256": "69a61e60ed3c891b11aa65a2a70a5256278acfa261eeb3ae29ff4cdcd13aae3d",
       "sourceProjectNumber": null,
       "financialProjectIDs": [],
       "sourcePhase": "Not provided",
@@ -961,8 +961,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6128",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:06.023698+00:00",
-          "sourceSHA256": "6e1c41e256c4252842a882f5cb159b9f9f31baf9732eab956fc0a3f3c80f1d32"
+          "sourceCheckedAt": "2026-11-26T20:19:46.772704+00:00",
+          "sourceSHA256": "69a61e60ed3c891b11aa65a2a70a5256278acfa261eeb3ae29ff4cdcd13aae3d"
         },
         {
           "event": "project_expected_completion",
@@ -976,8 +976,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6128",
           "isActualActivityVerified": false,
           "sourceField": "Expected Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:06.023698+00:00",
-          "sourceSHA256": "6e1c41e256c4252842a882f5cb159b9f9f31baf9732eab956fc0a3f3c80f1d32"
+          "sourceCheckedAt": "2026-11-26T20:19:46.772704+00:00",
+          "sourceSHA256": "69a61e60ed3c891b11aa65a2a70a5256278acfa261eeb3ae29ff4cdcd13aae3d"
         }
       ],
       "sourceSchedule": {
@@ -1000,8 +1000,8 @@
       "title": "State Road A1A (Avenida Menendez) at State Road 5A (King Street/Cathedral Place) Intersection Improvement",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5602",
-      "sourceCheckedAt": "2026-11-25T22:21:06.084042+00:00",
-      "sourceSHA256": "c8f5c3def124dafe02dd03a4de37789ef5dee6e3df634544e0ce35df40d25057",
+      "sourceCheckedAt": "2026-11-26T20:19:46.752231+00:00",
+      "sourceSHA256": "06afa77647393801623909658ea6b3c320eec03cd96b6ccdce551342fade4cbb",
       "sourceProjectNumber": "430897-4",
       "financialProjectIDs": [
         "430897-4"
@@ -1028,8 +1028,8 @@
       "title": "State Road A1A from E Magnolia Avenue to Flagler County line resurfacing",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6118",
-      "sourceCheckedAt": "2026-11-25T22:21:06.279746+00:00",
-      "sourceSHA256": "96a62625729a99eb2f0811a1282423bd0e6cefa0fa8d996119ea5f95d0628aba",
+      "sourceCheckedAt": "2026-11-26T20:19:46.898592+00:00",
+      "sourceSHA256": "4b52ea3d02ea6bbe846adddfe3c5a65edcd14b5f014f21ab0532251d4bc6698f",
       "sourceProjectNumber": "210265-9",
       "financialProjectIDs": [
         "210265-9"
@@ -1048,8 +1048,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6118",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:06.279746+00:00",
-          "sourceSHA256": "96a62625729a99eb2f0811a1282423bd0e6cefa0fa8d996119ea5f95d0628aba"
+          "sourceCheckedAt": "2026-11-26T20:19:46.898592+00:00",
+          "sourceSHA256": "4b52ea3d02ea6bbe846adddfe3c5a65edcd14b5f014f21ab0532251d4bc6698f"
         }
       ],
       "sourceSchedule": {
@@ -1072,8 +1072,8 @@
       "title": "State Road A1A from Gnarled Oaks Drive to the Duval County line Proposed Operational Improvements",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6105",
-      "sourceCheckedAt": "2026-11-25T22:21:06.269916+00:00",
-      "sourceSHA256": "ee015c7c4d09a3fcac67f60940b5bebbfaeb4a41a20506dc093dbf3a9591bd91",
+      "sourceCheckedAt": "2026-11-26T20:19:47.015584+00:00",
+      "sourceSHA256": "87294cafae8210586c0bb9c59ae0ae5629580275a6883d406a148252dfc08716",
       "sourceProjectNumber": "210404-4",
       "financialProjectIDs": [
         "210404-4"
@@ -1100,8 +1100,8 @@
       "title": "State Road A1A from Matanzas Inlet Bridge to State Road 206 trail construction",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5670",
-      "sourceCheckedAt": "2026-11-25T22:21:06.245387+00:00",
-      "sourceSHA256": "fea6487e1df029a28c834a5b91aadb0b256e1e3aaae704b1e9639cdec1b28f30",
+      "sourceCheckedAt": "2026-11-26T20:19:46.996207+00:00",
+      "sourceSHA256": "6722498ce42d25e5d8e0c8ad62a758e150f8a85c8c3bb1675df887b62c4cb528",
       "sourceProjectNumber": "447063-1",
       "financialProjectIDs": [
         "447063-1"
@@ -1120,8 +1120,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5670",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:06.245387+00:00",
-          "sourceSHA256": "fea6487e1df029a28c834a5b91aadb0b256e1e3aaae704b1e9639cdec1b28f30"
+          "sourceCheckedAt": "2026-11-26T20:19:46.996207+00:00",
+          "sourceSHA256": "6722498ce42d25e5d8e0c8ad62a758e150f8a85c8c3bb1675df887b62c4cb528"
         }
       ],
       "sourceSchedule": {
@@ -1144,8 +1144,8 @@
       "title": "State Road A1A from State Road 206 to A1A Beach Boulevard trail construction",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5671",
-      "sourceCheckedAt": "2026-11-25T22:21:06.255065+00:00",
-      "sourceSHA256": "980e8269fbfa69d5a785661099304579eb750b5fb8043f396c1d24da545e3648",
+      "sourceCheckedAt": "2026-11-26T20:19:47.006503+00:00",
+      "sourceSHA256": "279b5eb4be0ac5b581ef393c724f8631f3d9080342262d770fd79bd9ae7e2f93",
       "sourceProjectNumber": "447062-1",
       "financialProjectIDs": [
         "447062-1"
@@ -1164,8 +1164,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5671",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:06.255065+00:00",
-          "sourceSHA256": "980e8269fbfa69d5a785661099304579eb750b5fb8043f396c1d24da545e3648"
+          "sourceCheckedAt": "2026-11-26T20:19:47.006503+00:00",
+          "sourceSHA256": "279b5eb4be0ac5b581ef393c724f8631f3d9080342262d770fd79bd9ae7e2f93"
         }
       ],
       "sourceSchedule": {
@@ -1188,8 +1188,8 @@
       "title": "State Road A1A from State Road 312 to E Magnolia Avenue resurfacing",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6117",
-      "sourceCheckedAt": "2026-11-25T22:21:06.465680+00:00",
-      "sourceSHA256": "a25ca7db1703f142a6b17e90cac391453682f475bac1701140cb05312fa28756",
+      "sourceCheckedAt": "2026-11-26T20:19:47.086071+00:00",
+      "sourceSHA256": "33f5aa8961ef8e77be0304aa23318f1814524dd7fe8e9dac62f95b623bff8d23",
       "sourceProjectNumber": "210265-8",
       "financialProjectIDs": [
         "210265-8"
@@ -1208,8 +1208,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6117",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:06.465680+00:00",
-          "sourceSHA256": "a25ca7db1703f142a6b17e90cac391453682f475bac1701140cb05312fa28756"
+          "sourceCheckedAt": "2026-11-26T20:19:47.086071+00:00",
+          "sourceSHA256": "33f5aa8961ef8e77be0304aa23318f1814524dd7fe8e9dac62f95b623bff8d23"
         }
       ],
       "sourceSchedule": {
@@ -1232,8 +1232,8 @@
       "title": "State Road A1A Trail from Marineland to the Matanzas Inlet Bridge",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5548",
-      "sourceCheckedAt": "2026-11-25T22:21:06.551459+00:00",
-      "sourceSHA256": "674f2cd12ab39c463d7f90473e2dcbd390dd453a8b6a326dc9ddd283b4d8c7c4",
+      "sourceCheckedAt": "2026-11-26T20:19:47.215239+00:00",
+      "sourceSHA256": "4b9ff76ff5935258e930580720b5c1d0f92adf14bd9cf54f3b6fc604c2cee050",
       "sourceProjectNumber": "447064-1",
       "financialProjectIDs": [
         "447064-1"
@@ -1252,8 +1252,8 @@
           "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5548",
           "isActualActivityVerified": false,
           "sourceField": "Project Start",
-          "sourceCheckedAt": "2026-11-25T22:21:06.551459+00:00",
-          "sourceSHA256": "674f2cd12ab39c463d7f90473e2dcbd390dd453a8b6a326dc9ddd283b4d8c7c4"
+          "sourceCheckedAt": "2026-11-26T20:19:47.215239+00:00",
+          "sourceSHA256": "4b9ff76ff5935258e930580720b5c1d0f92adf14bd9cf54f3b6fc604c2cee050"
         }
       ],
       "sourceSchedule": {
@@ -1276,8 +1276,8 @@
       "title": "U.S. 1 at Camacha Park Drive proposed traffic signal",
       "counties": "St. Johns",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=6144",
-      "sourceCheckedAt": "2026-11-25T22:21:06.543692+00:00",
-      "sourceSHA256": "f3707667496b48b24bc4ce696b7403555e3591497d898941109a3d58fa4b2eb1",
+      "sourceCheckedAt": "2026-11-26T20:19:47.193628+00:00",
+      "sourceSHA256": "ddc11537ff66c8be695ce67eb7bb545331c703f658d9abdbb26d5d9a131fe3c0",
       "sourceProjectNumber": null,
       "financialProjectIDs": [],
       "sourcePhase": "Not provided",
@@ -1302,8 +1302,8 @@
       "title": "U.S. 17 proposed median modification (5012 U.S. 17)",
       "counties": "Clay",
       "sourceURL": "https://nflroads.com/ProjectDetails.aspx?p=5489",
-      "sourceCheckedAt": "2026-11-25T22:21:06.560784+00:00",
-      "sourceSHA256": "c98a65a19a0fceb5bd64e046b188dec6bec383f6eddcd5ae0c043eee45e1f3c5",
+      "sourceCheckedAt": "2026-11-26T20:19:47.201118+00:00",
+      "sourceSHA256": "0f8bb61b794bc5fa3c30960ca9cd6952d6d434eaad29cb401e2c7d07373b436e",
       "sourceProjectNumber": null,
       "financialProjectIDs": [],
       "sourcePhase": "Not provided",
@@ -1328,7 +1328,7 @@
       "title": "U.S. 1 (S.R. 5) from Hibiscus Avenue to Ridgewood Avenue",
       "counties": "Flagler",
       "sourceURL": "https://www.cflroads.com/project/454194-1",
-      "sourceCheckedAt": "2026-11-25T22:21:07.628502+00:00",
+      "sourceCheckedAt": "2026-11-26T20:19:48.089802+00:00",
       "sourceSHA256": "445b6d570a80fb4da271e05ec8faf7ce287387494c6675cf615af1c693e42694",
       "sourceProjectNumber": "454194-1",
       "financialProjectIDs": [
@@ -1356,7 +1356,7 @@
       "title": "U.S. 1 (S.R. 5) over Pellicer Creek Bridge Replacement",
       "counties": "Flagler",
       "sourceURL": "https://www.cflroads.com/project/447118-1",
-      "sourceCheckedAt": "2026-11-25T22:21:08.396384+00:00",
+      "sourceCheckedAt": "2026-11-26T20:19:48.700284+00:00",
       "sourceSHA256": "21cbdb26ca69489bb8d061ce8a3a33c5f5e95982b05bf25f8448f0eb55d85dd2",
       "sourceProjectNumber": "447118-1",
       "financialProjectIDs": [
@@ -1376,7 +1376,7 @@
           "sourceURL": "https://www.cflroads.com/project/447118-1",
           "isActualActivityVerified": false,
           "sourceField": "Est. Completion",
-          "sourceCheckedAt": "2026-11-25T22:21:08.396384+00:00",
+          "sourceCheckedAt": "2026-11-26T20:19:48.700284+00:00",
           "sourceSHA256": "21cbdb26ca69489bb8d061ce8a3a33c5f5e95982b05bf25f8448f0eb55d85dd2"
         }
       ],
