@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-26T19:51:16.039321+00:00",
-  "revision": "566c8feb2c035c41c2577466c66d9c1d7b4ae3d428f25618b0e013726c691750",
+  "generatedAt": "2026-11-27T13:48:52.167009+00:00",
+  "revision": "3bd8cac73eb95f4bcdb928963eb6f4913af1d7ac80a176044a224c2db2e3d9c2",
   "count": 808,
   "changes": {
     "added": 0,
@@ -4090,6 +4090,11 @@
         "reason": "Geometry/county/description-side check needs review"
       }
     ],
-    "currentFeatures": 455
+    "currentFeatures": 455,
+    "physicalTiming": {
+      "underConstruction": 4,
+      "completed": 63,
+      "withConflicts": 28
+    }
   }
 }
