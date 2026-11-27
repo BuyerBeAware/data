@@ -4,6 +4,7 @@ Legacy/production projects.json is never a destination. Old pins are never delet
 or moved automatically. Unlocated records and news remain review artifacts.
 """
 import argparse
+from bba_capital_timing import enrich as enrich_capital_timing
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -134,8 +135,14 @@ def flagler_records(report,config,s,stamp):
             'Official '+cfg['authority']+' geometry for this record, checked inside Flagler County. '+p['method']+'. The exact work footprint/phase is not verified.',r['source_urls'])
         # Agency disposition belongs to its application/phase, not physical construction completion.
         record['details']+='\nAgency record status (not confirmation of physical completion): '+str(r.get('status') or 'Not provided')
+        if cfg['id']=='palm-coast-capital':
+            record['locationSourceRef']=next(url for url in r['source_urls'] if url.startswith(cfg['url']+'/query?'))
+            record=enrich_capital_timing(record,r.get('official_fields',{}))
         out.append(record)
-    return out,{'accepted':len(out),'withheld':held,'currentFeatures':len(seen)}
+    return out,{'accepted':len(out),'withheld':held,'currentFeatures':len(seen),
+        'physicalTiming':{'underConstruction':sum(r.get('constructionStatus')=='Under Construction' for r in out),
+            'completed':sum(r.get('constructionStatus')=='Completed' for r in out),
+            'withConflicts':sum(bool(r.get('timingEvidenceConflicts')) for r in out)}}
 
 
 def write(path,payload):
