@@ -12,8 +12,8 @@ from datetime import datetime, timezone
 from urllib.parse import urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parent.parent
-SCOPE = "Hillsborough County, Florida, including Tampa"
-DOMAINS = ("fdot.gov", "hcfl.gov", "tampa.gov")
+SCOPE = "St. Johns, Flagler and Clay counties, Florida"
+DOMAINS = ("fdot.gov", "sjcfl.us", "stjohnsclerk.com", "flaglercounty.gov", "palmcoast.gov", "claycountygov.com")
 MAX_CANDIDATES = 10
 
 
@@ -183,8 +183,8 @@ def research(client, model, diagnostic):
     queries = [
         f"Find up to {MAX_CANDIDATES} specific infrastructure or development projects "
         f"in {SCOPE}. Search official FDOT, county and city project pages.",
-        "Search site:hcfl.gov Hillsborough County specific current capital "
-        "improvement projects and site:fdot.gov Hillsborough road projects.",
+        "Search official St. Johns, Flagler and Clay county capital improvements, "
+        "FLUM amendments, commercial permits and FDOT road projects, following renamed projects and exact application IDs.",
     ]
     for query in queries:
         response = client.responses.create(
