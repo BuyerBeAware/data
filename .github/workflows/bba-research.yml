@@ -1,53 +1,57 @@
 name: BBA Project Research
-
 on:
   workflow_dispatch:
+    inputs:
+      run_ai:
+        description: Optional paid AI review; requires a working API credential
+        type: boolean
+        default: false
   schedule:
     - cron: '0 12 * * *'
-
 permissions:
   contents: read
-
 concurrency:
   group: bba-research-${{ github.ref }}
   cancel-in-progress: false
-
 jobs:
   research:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Check Python syntax
-        run: python -m py_compile scripts/bba_research.py
-
-      - name: Install OpenAI SDK
-        run: python -m pip install --upgrade openai
-
-      - name: Run BBA AI research
+      - run: python -m pip install -r requirements.txt
+      - name: Test evidence and permit behavior
+        run: python -m unittest discover -s scripts -p 'test_*.py'
+      - name: Collect official commercial permits and qualified locations
+        run: python scripts/bba_commercial_permits.py
+      - name: Verify linked application histories
+        run: python scripts/bba_project_evidence.py
+      - name: Follow project names and aliases in public news
+        run: python scripts/bba_project_followup.py
+      - name: Optional AI review
+        if: github.event_name == 'workflow_dispatch' && inputs.run_ai
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4.1
         run: python scripts/bba_research.py
-
-      - name: Confirm project data was not changed
+      - name: Explain research scope
         if: always()
-        run: git diff --exit-code -- projects.json
-
-      - name: Upload research reports
+        run: |
+          echo 'Official-source collection and context leads run without an AI key. Optional AI credential remains a separate requirement.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Research artifacts are not published map pins. County Discovery validates and publishes qualified records.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve published data
         if: always()
-        uses: actions/upload-artifact@v4
+        run: git diff --exit-code -- projects.json feeds
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: bba-research-reports-${{ github.run_number }}
           path: |
+            research-output/*.json
             research_candidates.json
             research_diagnostics.json
-          if-no-files-found: warn
-          retention-days: 14
+          if-no-files-found: error
+          retention-days: 30
