@@ -66,8 +66,9 @@ def run(root,artifacts):
         if len(matches)!=1:raise ValueError('Configured document identity not in current snapshot')
         incoming[matches[0]]=enrich(incoming[matches[0]],document,session(),stamp)
     merged,changes=core.merge(baseline,incoming)
-    output={'schemaVersion':1,'audience':'bba-beta','generatedAt':stamp,'revision':core.digest(merged),
-        'counties':[core.SJC,core.FLAGLER,CLAY],'projects':merged,
+    research=legacy.get('researchProjects',[])
+    output={'schemaVersion':1,'audience':'bba-beta','generatedAt':stamp,'revision':core.digest({'projects':merged,'researchProjects':research} if research else merged),
+        'counties':[core.SJC,core.FLAGLER,CLAY],'projects':merged,'researchProjects':legacy.get('researchProjects',[]),
         'coverage':{'scope':'Three-county beta v2; incomplete permit/work-date coverage. Unsupported evidence remains in review.','clayAccepted':len(incoming)}}
     if len(json.dumps(output,ensure_ascii=False).encode())>8_000_000:raise ValueError('Client feed byte limit exceeded')
     if target.exists():
