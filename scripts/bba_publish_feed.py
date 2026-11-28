@@ -84,7 +84,7 @@ def base_record(ident,title,description,source,lat,lng,county,stamp,basis,urls):
         details=description or 'Official project area; detailed work scope not provided.',schedule='Work dates not verified',
         sourceURL=source,latitude=lat,longitude=lng,countyID=county,reviewOnly=True,publicationAllowed=False,
         locationPrecision='estimated',locationEstimateBasis=basis,locationEvidenceURLs=list(dict.fromkeys(urls)),
-        locationReviewedAt=stamp,locationSourceKind='Estimated representative project area; not a surveyed footprint',
+        locationReviewedAt=stamp,locationSourceKind='Estimated representative project area; not a surveyed work footprint',
         coordinateVerification='official_project_area_estimate',evidenceConfidence='official_geometry_estimated_work_location',
         projectHorizon='unknown')
 
@@ -157,13 +157,39 @@ def run(root,artifacts):
     sjc,sjc_report=sjc_records(s,stamp)
     report=json.loads((artifacts/(FLAGLER+'.review.json')).read_text())
     flagler,flagler_report=flagler_records(report,next(c for c in config if c['id']==FLAGLER),s,stamp)
+    commercial=[];research=[];evidence=None
+    if (root/'config/project-evidence.json').exists():
+        from bba_commercial_permits import run as commercial_run
+        from bba_project_evidence import collect as collect_evidence
+        commercial_report=commercial_run(root)
+        if commercial_report['status']!='completed':raise ValueError('Commercial snapshot partial; preserve feed and inspect review report')
+        rings=county_boundary(s,SJC)
+        commercial=[r for r in commercial_report['projects'] if geometry_candidate({'x':r['longitude'],'y':r['latitude']},rings)]
+        for c in commercial_report['candidates']:
+            if c['lat'] is not None:continue
+            research.append(dict(projectId='SJC-BP-'+c['permit_id'],title=c['name'],
+                status='County permit: '+c['status']+'; physical work not independently verified',
+                summary=c['description']+' Site: '+c['address']+'. Permit issued '+c['issued_date']+'.',
+                sourceURL=c['source_url'],checkedAt=stamp,locationStatus='Not mapped: '+str(c.get('location_review_reason') or 'Location requires review'),
+                evidenceEvents=[dict(date=c['issued_date'],kind='Permit issued',summary='County permit issuance; not a construction start or opening date.',sourceURL=c['source_url'],checkedAt=stamp)]))
+        evidence=collect_evidence(root)
     # Validate the complete candidate before touching the current feed.
-    merged,changes=merge(previous,sjc+flagler)
+    merged,changes=merge(previous,sjc+flagler+commercial)
+    if evidence is not None:
+        from bba_project_evidence import enrich
+        merged=enrich(merged,evidence)
+    # Keep unresolved historical records across rotating report windows. A newly
+    # qualified exact identity leaves this list when it gains a map location.
+    saved_research=json.loads(target.read_text()).get('researchProjects',[]) if target.exists() else []
+    research_by_id={r['projectId']:r for r in saved_research}
+    research_by_id.update({r['projectId']:r for r in research})
+    mapped_ids={r['projectId'] for r in merged}
+    research=[r for key,r in research_by_id.items() if key not in mapped_ids]
     if any(r.get('countyID',SJC) not in (SJC,FLAGLER) for r in merged):raise ValueError('Legacy two-county feed cannot contain Clay records')
-    generated={'schemaVersion':1,'audience':'bba-beta','generatedAt':stamp,'revision':digest(merged),
-        'counties':[SJC,FLAGLER],'projects':merged,
+    generated={'schemaVersion':1,'audience':'bba-beta','generatedAt':stamp,'revision':digest({'projects':merged,'researchProjects':research} if research else merged),
+        'counties':[SJC,FLAGLER],'projects':merged,'researchProjects':research,
         'coverage':{'scope':'Official county/municipal project GIS areas; incomplete permit and work-date coverage. News/unlocated records remain review-only.',
-                    'stJohnsAccepted':len(sjc),'flaglerAccepted':len(flagler)}}
+                    'stJohnsAccepted':len(sjc),'flaglerAccepted':len(flagler),'commercialAccepted':len(commercial),'unmappedCommercial':len(research)}}
     if target.exists():
         old=json.loads(target.read_text());write(feeds/'history'/(old['revision']+'.json'),old)
     write(feeds/'history'/(generated['revision']+'.json'),generated)
