@@ -20,7 +20,7 @@ def queries(rows, registry, limit=12):
     # Prioritize a deterministic daily slice; do not search every project on every run.
     eligible=sorted([r for r in rows if r.get('projectHorizon')=='unknown' and len(r.get('title',''))>5],key=lambda r:r['projectId'])
     if eligible:
-        start=datetime.now(timezone.utc).date().toordinal()%len(eligible)
+        start=(datetime.now(timezone.utc).date().toordinal()*max(1,limit-len(tasks)))%len(eligible)
         for r in (eligible[start:]+eligible[:start])[:max(0,limit-len(tasks))]:
             tasks.append(dict(projectIDs=[r['projectId']],query='"'+r['title']+'" Florida project permit planning'))
     return tasks[:limit]
