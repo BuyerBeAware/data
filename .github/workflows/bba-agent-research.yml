@@ -2,6 +2,11 @@ name: BBA Agent Research
 
 on:
   workflow_dispatch:
+    inputs:
+      run_ai:
+        description: Optional paid AI review; requires a working API credential
+        type: boolean
+        default: false
   schedule:
     - cron: '0 12 * * *'
 
@@ -33,7 +38,7 @@ jobs:
       - name: Run BBA agents
         if: ${{ !cancelled() }}
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ github.event_name == 'workflow_dispatch' && inputs.run_ai && secrets.OPENAI_API_KEY || '' }}
           BBA_MAX_PAGES: '35'
           BBA_MAX_ROAD_DETAILS: '250'
           BBA_MAX_APPROVAL_DETAILS: '250'
