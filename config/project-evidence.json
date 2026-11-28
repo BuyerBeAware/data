@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "projects": [
+    {
+      "projectIDs": [
+        "COMPAMD2024000005",
+        "MAJMOD2025000007"
+      ],
+      "aliases": [
+        "Water Lily",
+        "Tocoi River Estates"
+      ],
+      "relatedApplicationIDs": [
+        "COMPAMD2024000005",
+        "MAJMOD2025000007"
+      ],
+      "events": [
+        {
+          "date": "2025-04-03",
+          "kind": "Planning recommendation",
+          "applicationID": "COMPAMD2024000005",
+          "summary": "PZA recommended denial of transmittal of the original Water Lily FLUM amendment, 5–0. This was a recommendation, not a final county-commission decision.",
+          "sourceURL": "https://www.sjcfl.us/wp-content/uploads/2024/11/ada-04.03.25-pza-signed-minutes.pdf",
+          "requiredTerms": [
+            "recommend denial of the transmittal of COMPAMD 2024-05 Water Lily",
+            "carries 5/0"
+          ]
+        },
+        {
+          "date": "2025-11-04",
+          "kind": "Related application decision",
+          "applicationID": "MAJMOD2025000007",
+          "summary": "County commissioners denied MAJMOD 2025-07, the revised 205-home Tocoi River Estates proposal, 5–0. This decision belongs to that separate application.",
+          "sourceURL": "https://stjohnsclerk.com/wp-content/uploads/2025/11/110425mrbcc.pdf",
+          "requiredTerms": [
+            "carried 5/0, to deny MAJMOD 2025-07",
+            "205-unit residential subdivision"
+          ]
+        },
+        {
+          "date": "2025-12-17",
+          "kind": "Reported legal challenge",
+          "applicationID": "MAJMOD2025000007",
+          "summary": "Action News Jax reported a court challenge to the Tocoi River Estates denial. Current case outcome is not verified.",
+          "sourceURL": "https://www.actionnewsjax.com/news/local/developer-is-taking-legal-action-after-st-johns-county-denied-planned-rural-development/KHODM6NFKBFWLGTEJ3BWGKZO4U/?outputType=amp",
+          "requiredTerms": [
+            "Tocoi River Estates",
+            "challenging that decision in court",
+            "December 17, 2025"
+          ]
+        }
+      ],
+      "context": "Related proposal names and applications are shown separately. The original proposal’s reported 2038 build-out target is historical, not a current approved construction schedule. Current litigation outcome and later approvals remain unverified."
+    }
+  ]
+}
