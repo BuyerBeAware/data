@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 """County-independent state corridor history and federal highway/bridge approvals.
 Documents are evidence, not map points or proof of current construction.
@@ -9,7 +10,8 @@ from pathlib import Path
 import re
 from urllib.parse import urlencode, urljoin, urlsplit, parse_qs
 from urllib.request import Request, build_opener, HTTPRedirectHandler
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
+import time
 from bs4 import BeautifulSoup
 from bba_road_sources import SourceError, clean, write
 
@@ -39,8 +41,17 @@ class Redirects(HTTPRedirectHandler):
 class Client:
     def read(self,url):
         if not approved(url):raise SourceError('Unapproved approval source')
-        with build_opener(Redirects()).open(Request(url,headers={'User-Agent':'BuyerBeAware/1.0 official highway research'}),timeout=25) as r:
-            raw=r.read(4_000_001)
+        for attempt in range(3):
+            try:
+                with build_opener(Redirects()).open(Request(url,headers={'User-Agent':'BuyerBeAware/1.0 official highway research'}),timeout=25) as r:
+                    raw=r.read(4_000_001)
+                break
+            except HTTPError as exc:
+                if exc.code not in (429,500,502,503,504) or attempt==2: raise
+                time.sleep(1+attempt)
+            except (URLError, TimeoutError):
+                if attempt==2: raise
+                time.sleep(1+attempt)
         if len(raw)>4_000_000:raise SourceError('Approval source exceeded size limit')
         return raw.decode('utf-8-sig')
 
@@ -173,3 +184,4 @@ def run(root=None,client=None,max_pages=10,max_details=250):
 if __name__=='__main__':
     r=run();print('Major-road approvals:',r['status'],r['notice_count'],'notices')
     raise SystemExit(0 if r['status']=='completed' else 1)
+         
