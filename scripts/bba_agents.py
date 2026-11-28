@@ -96,7 +96,9 @@ def news_sources():
     from xml.etree import ElementTree as ET
     leads = []
     tasks = long_range_review()['search_tasks']
-    research_queries = [t['query'] for t in tasks[:12] if isinstance(t.get('query'), str)]
+    registry=json.loads((ROOT/'config/project-evidence.json').read_text())
+    tasks = [{'query':'\"'+alias+'\" Florida development approval construction'} for entry in registry['projects'] for alias in entry['aliases']] + tasks
+    research_queries = [t['query'] for t in tasks[:14] if isinstance(t.get('query'), str)]
     for query in list(dict.fromkeys(NEWS_QUERIES + research_queries)):
         url = 'https://news.google.com/rss/search?q=' + quote(query) + '&hl=en-US&gl=US&ceid=US:en'
         xml = fetch(url)
@@ -183,7 +185,7 @@ def ai_review(projects, pages, news, road_projects=None, rail_projects=None, app
         )
         return {'enabled': True, 'model': os.getenv('BBA_AI_MODEL', 'gpt-4.1-mini'), 'notes': response.output_text[:25000]}
     except Exception as exc:
-        return {'enabled': False, 'error': str(exc)}
+        return {'enabled': False, 'error': type(exc).__name__, 'status': 'optional_ai_failed'}
 
 
 def main():
@@ -237,6 +239,9 @@ def main():
     print('SAFETY: live projects.json was NOT modified')
     print(f"Official road discovery: {road_report['status']}; {road_report['project_count']} projects")
     print(f"Official rail discovery: {rail_report['status']}; {len(rail_report['projects'])} records")
+    for source in approval_report.get('sources',[]):
+        if source.get('status')=='failed':
+            print('APPROVAL SOURCE FAILED:',source['url'],source.get('error','Unknown error'))
     if approval_report['status'] != 'completed':
         raise SystemExit('Major-road approvals incomplete; inspect major_road_approvals.review.json')
     if rail_report['status'] != 'completed':
