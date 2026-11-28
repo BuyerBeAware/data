@@ -94,7 +94,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: beta-feed-publication
-          path: feeds/latest-publication.json
+          path: |
+            feeds/latest-publication.json
+            research-output/commercial-permits.review.json
+            research-output/project-evidence.review.json
           if-no-files-found: warn
           retention-days: 30
 
